@@ -7,19 +7,19 @@ import Register from "../pages/Gest/register";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: GestLayout(),
+        Component: GestLayout,
         children: [
             {
                 path: "/",
-                element: Home()
+                Component: Home
             },
             {
                 path: "/login",
-                element: Login()
+                Component: Login
             },
             {
                 path: "/register",
-                element: Register()
+                Component: Register
             }
         ]
     }
