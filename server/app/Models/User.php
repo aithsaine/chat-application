@@ -3,13 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Rules\VerifyAgeRule;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -17,8 +22,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        "gender",
+        "birthday",
         'password',
     ];
 
@@ -43,5 +51,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public static function validation(Request $request)
+    {
+        $request->validate([
+            'first_name' => "required",
+            "last_name" => "required",
+            "email" => ["required", "unique:users,email",],
+            "password" => "required",
+            "birthday" => ["required", "date", new VerifyAgeRule()],
+            "gender" => "required"
+        ]);
     }
 }
