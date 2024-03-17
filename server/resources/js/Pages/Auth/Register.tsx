@@ -9,6 +9,7 @@ import Lottie from 'react-lottie';
 import animationdata from "../../../../public/assets/lottiefiles/chat.json"
 import { Button, FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import { Bars } from "react-loading-icons"
+import image from "../../../../public/assets/imgs/smartphone.png"
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -30,8 +31,12 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        setWait(true);
 
         post(route('register'));
+        setTimeout(() => {
+            setWait(false);
+        }, 3000);
     };
     const defaultOptions = {
         loop: true,
@@ -48,11 +53,12 @@ export default function Register() {
             <Head title="Register" />
             <main className="md:flex flex-start m-0 min-h-screen  md:items-center w-full mt-6">
                 {/* Style the container element that holds the Lottie component */}
-                <div className="md:w-1/2 hidden md:flex ml-0  m-4" >
+                <div className="md:w-1/2 P-6 hidden md:flex ml-0  m-4" >
                     {/* Render the Lottie component */}
-                    <Lottie
+                    {/* <Lottie
                         options={defaultOptions}
-                    />
+                    /> */}
+                    <img src={image} alt="" width={400} />
                 </div>
 
 
@@ -101,7 +107,6 @@ export default function Register() {
                                 id="standard-basic"
                                 label="Birthday"
                                 variant="standard"
-                                defaultValue={new Date().toISOString().substr(0, 10)} // Set default value to today's date
                                 type="date" // Add this line to specify the input type as date
                             />
                             <InputError message={errors.birthday} className="mt-2" />
@@ -128,7 +133,7 @@ export default function Register() {
                             <Button style={{ height: "25px" }} type='submit' variant="contained" color="success">
                                 {wait ? <Bars width={15} height={29} /> : "Register"}
                             </Button>
-                            <Link href={"/login"}>I already have an account</Link>
+                            <Link href={"/login"}>I already have an account <u>Log in</u></Link>
                         </div>
 
                     </div>

@@ -1,4 +1,6 @@
-import { Link, Head } from '@inertiajs/react';
+import {
+    Link, Head
+} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import animationdata from "../../../public/assets/lottiefiles/land.json"
 import { Button } from "@mui/material"
@@ -18,8 +20,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }: PageProps<
             preserveAspectRatio: "xMidYMid slice"
         }
     }
+    const user = auth.user
     return (
         <>
+            < Head title='Welcome to Home page' />
 
 
 
@@ -27,9 +31,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }: PageProps<
                 {/* Style the container element that holds the Lottie component */}
                 <div className="md:w-1/2 ml-0  m-4" >
                     {/* Render the Lottie component */}
-                    <Lottie
+                    {/* <Lottie
                         options={defaultOptions}
-                    />
+                    /> */}
                 </div>
                 <div className="md:w-1/2 m-4">
                     <div className="text-5xl  font-primary text-center bg-gradient-to-l from-orange-500 to-yellow-500 text-transparent bg-clip-text font-bold mt-6"><span className="">Share</span> & Chat</div>
@@ -38,7 +42,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }: PageProps<
                         <span style={{ marginLeft: '10px' }}>
                             <Link href={"/register"}>
                                 <Button variant="contained" color="secondary">
-                                    Join As
+                                    {user ? "Dashboard" : "Join As"}
                                 </Button>
                             </Link></span>
                     </p>
