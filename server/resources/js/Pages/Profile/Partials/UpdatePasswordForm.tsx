@@ -1,10 +1,11 @@
-import { useRef, FormEventHandler } from 'react';
+import { useRef, FormEventHandler, useEffect } from 'react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import toast from 'react-hot-toast';
 
 export default function UpdatePasswordForm({ className = '' }: { className?: string }) {
     const passwordInput = useRef<HTMLInputElement>(null);
@@ -15,7 +16,13 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
         password: '',
         password_confirmation: '',
     });
+    useEffect(() => {
+        if (recentlySuccessful) {
 
+            toast.success("Your password has been successfully Updated!");
+
+        }
+    }, [recentlySuccessful])
     const updatePassword: FormEventHandler = (e) => {
         e.preventDefault();
 
