@@ -26,7 +26,6 @@ import {
     Bars2Icon,
 } from "@heroicons/react/24/solid";
 import ResponsiveNavLink from "./ResponsiveNavLink";
-
 // profile menu component
 const profileMenuItems = [
 
@@ -69,19 +68,19 @@ function ProfileMenu() {
     const closeMenu = () => setIsMenuOpen(false);
 
     return (
-        <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+        <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="top-left">
             <MenuHandler>
                 <Button
                     variant="text"
                     color="blue-gray"
-                    className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+                    className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto sticky-top"
                 >
                     <Avatar
                         variant="circular"
-                        size="sm"
+                        size="md"
                         alt="tania andrew"
-                        className="border border-gray-900 p-0.5"
-                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                        className="border rounded-full border-gray-900 p-0.5"
+                        src={""}
                     />
                     <ChevronDownIcon
                         strokeWidth={2.5}
@@ -200,7 +199,7 @@ function NavList() {
                     color="gray"
                     className="font-medium text-blue-gray-500"
                 >
-                    <ResponsiveNavLink className="flex items-center gap-2 lg:rounded-full" href="/">
+                    <ResponsiveNavLink className="flex items-center justify-center gap-2 lg:rounded-full" href="/">
                         <span className="text-gray-900"> {label}</span>
                     </ResponsiveNavLink>
                 </Typography>
@@ -224,22 +223,16 @@ export function Nav() {
     return (
         <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
             <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
-                <Typography
-                    as="a"
-                    href="#"
-                    className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
-                >
-                    Material Tailwind
-                </Typography>
+
                 <div className="hidden lg:block">
                     <NavList />
                 </div>
                 <IconButton
                     size="sm"
-                    color="blue-gray"
+                    color="black"
                     variant="text"
                     onClick={toggleIsNavOpen}
-                    className="ml-auto mr-2 lg:hidden"
+                    className="ml-autocflex items-center mr-2 lg:hidden"
                 >
                     <Bars2Icon className="h-6 w-6" />
                 </IconButton>
@@ -252,6 +245,6 @@ export function Nav() {
             <MobileNav open={isNavOpen} className="overflow-scroll">
                 <NavList />
             </MobileNav>
-        </Navbar>
+        </Navbar >
     );
 }

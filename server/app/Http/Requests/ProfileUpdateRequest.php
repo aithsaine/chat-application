@@ -18,7 +18,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'first_name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             "birthday" => ["required", "date", new VerifyAgeRule()],
         ];
     }

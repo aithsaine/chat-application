@@ -34,6 +34,14 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
+        if ($request->hasFile("picture")) {
+            $request->validate(["picture" => "image", "mimes:png,jpg,jpeg"]);
+            $newName = uniqid() . "." . $request->file("picture")->getClientOriginalExtension();
+            $savePict =   $request->file("picture")->storeAs("profiles", $newName);
+            if ($savePict) {
+                $request->user()->picture = $newName;
+            }
+        }
 
         $request->user()->save();
 

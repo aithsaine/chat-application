@@ -11,7 +11,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome', []);
 })->name("welcome")->middleware(InAuthenticatedMiddleware::class);
 
-Route::get('/dashboard', function () {
+Route::get('/feed', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

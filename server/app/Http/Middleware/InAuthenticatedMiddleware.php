@@ -18,7 +18,7 @@ class InAuthenticatedMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::user()) {
-            return  redirect("/dashboard");
+            return  redirect("/feed");
         }
         return $next($request);
     }

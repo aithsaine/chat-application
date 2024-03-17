@@ -5,18 +5,29 @@ import { PageProps } from '@/types';
 export default function Dashboard({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
+            path="/ds"
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+
         >
             <Head title="Dashboard" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">You're logged in!</div>
+            <div className="mt-4 flex p-1">
+                <div className="hidden lg:block min-h-screen mx-2  w-1/4 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    You're logged in!
+                </div>
+                <div className=" shadow-2xl lg:block flex min-h-screen mx-2 w-full lg:w-3/4 bg-white overflow-hidden sm:rounded-lg ">
+                    You're logged in!
+                    <div className='tracking-widest sm:hidden block border-2 border-black rounded absolute mb-1 bottom-0 right-0 mr-4' style={{ width: "48%", height: "30px" }}>
+                        friends
                     </div>
+
+                </div>
+                <div className=" sm:block min-h-screen hidden  lg:mx-2 sm:mx-1 w-1/4 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    You're logged in!
+
                 </div>
             </div>
-        </AuthenticatedLayout>
+
+        </AuthenticatedLayout >
     );
 }

@@ -8,12 +8,12 @@ import { User } from '@/types';
 import { Nav } from '@/Components/Nav';
 import { Toaster } from 'react-hot-toast';
 
-export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
+export default function Authenticated({ user, path, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
         <>
-            <Nav />
+            <Nav img={path} />
             <Toaster position="bottom-right" />
             <main>{children}</main>
         </>

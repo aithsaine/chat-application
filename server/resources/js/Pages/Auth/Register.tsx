@@ -15,7 +15,6 @@ export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         first_name: '',
         last_name: '',
-        birthday: '',
         gender: '',
         email: '',
         password: '',
