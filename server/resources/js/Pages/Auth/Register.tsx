@@ -89,29 +89,17 @@ export default function Register() {
                                     onChange={e => setData("gender", e.target.value)}
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
-                                    name="row-radio-buttons-group"
+                                    name="gender"
                                 >
-                                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                                    <FormControlLabel value="male" control={<Radio size="small" />} label="Male" />
+                                    <FormControlLabel value="female" control={<Radio size="small" />} label="Female" />
 
                                 </RadioGroup>
                             </FormControl>
                             <InputError message={errors.gender} className="mt-2" />
 
                         </div>
-                        <div className="flex flex-col">
-                            <TextField
-                                value={data.birthday}
-                                onChange={(e) => setData("birthday", e.target.value)}
-                                id="standard-basic"
-                                label="Birthday"
-                                variant="standard"
-                                type="date" // Add this line to specify the input type as date
-                            />
-                            <InputError message={errors.birthday} className="mt-2" />
 
-                        </div>
                         <div className="flex flex-col">
                             <TextField onChange={e => setData("email", e.target.value)} id="standard-basic" name='email' value={data.email} label="Email" variant="standard" />
                             <InputError message={errors.email} className="mt-2" />

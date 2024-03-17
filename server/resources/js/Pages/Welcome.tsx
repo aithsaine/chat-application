@@ -5,7 +5,7 @@ import { PageProps } from '@/types';
 import animationdata from "../../../public/assets/lottiefiles/anim.json"
 import { Button } from "@mui/material"
 import Lottie from 'react-lottie';
-export default function Welcome({ auth, laravelVersion, phpVersion }: PageProps<{ laravelVersion: string, phpVersion: string }>) {
+export default function Welcome({ auth }: PageProps<{ laravelVersion: string, phpVersion: string }>) {
     const handleImageError = () => {
         document.getElementById('screenshot-container')?.classList.add('!hidden');
         document.getElementById('docs-card')?.classList.add('!row-span-1');
@@ -25,8 +25,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }: PageProps<
         <>
             < Head title='Welcome to Home page' />
 
-
-
             <main className="md:flex min-h-screen flex-start m-0 md:items-center  w-full mt-6">
                 {/* Style the container element that holds the Lottie component */}
                 <div className="md:w-1/2 ml-0  m-4" >
@@ -40,7 +38,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }: PageProps<
                     <p className="text-2xl mt-6 mx-4 tracking-wide font-primary leading-loose">
                         Hello welcom to Chat Plateform Here You Can Share Your Idia, day, Experience, Fun ... .<br />with Your Friends
                         <span style={{ marginLeft: '10px' }}>
-                            <Link href={"/register"}>
+                            <Link href={"/login"}>
                                 <Button variant="contained" color="secondary">
                                     {user ? "Dashboard" : "Join As"}
                                 </Button>
