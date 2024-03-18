@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Navbar,
     MobileNav,
@@ -26,6 +26,7 @@ import {
     Bars2Icon,
 } from "@heroicons/react/24/solid";
 import ResponsiveNavLink from "./ResponsiveNavLink";
+import axios from "axios";
 // profile menu component
 const profileMenuItems = [
 
@@ -62,11 +63,27 @@ const profileMenuItems = [
     },
 ];
 
-function ProfileMenu() {
+function ProfileMenu({ filename }) {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     const closeMenu = () => setIsMenuOpen(false);
+    const [image, setImage] = useState("")
+    useEffect(() => {
+        const getPict = async () => {
+            const response = await axios.get(`/storage/picture/${filename}`, {
+                responseType: 'blob',
+            })
+            if (response.status == 200) {
 
+                const blobUrl = URL.createObjectURL(response.data);
+                setImage(blobUrl)
+                console.log(response.data)
+            }
+
+        }
+        getPict();
+
+    }, [])
     return (
         <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="top-left">
             <MenuHandler>
@@ -75,12 +92,14 @@ function ProfileMenu() {
                     color="blue-gray"
                     className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto sticky-top"
                 >
-                    <Avatar
-                        variant="circular"
-                        size="md"
+                    <img
+                        id="pictureProfile"
                         alt="tania andrew"
-                        className="border rounded-full border-gray-900 p-0.5"
-                        src={""}
+                        className="   w-30 h-30"
+                        src={image}
+                        style={{ borderRadius: "100%" }}
+                        width={40}
+                        height={40}
                     />
                     <ChevronDownIcon
                         strokeWidth={2.5}
@@ -208,7 +227,7 @@ function NavList() {
     );
 }
 
-export function Nav() {
+export function Nav({ filename }) {
     const [isNavOpen, setIsNavOpen] = React.useState(false);
 
     const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
@@ -221,7 +240,7 @@ export function Nav() {
     }, []);
 
     return (
-        <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+        <Navbar className="mx-auto my-0 max-w-screen-xl sticky top-0 z-50 p-2 lg:rounded-full lg:pl-6">
             <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
 
                 <div className="hidden lg:block">
@@ -240,7 +259,7 @@ export function Nav() {
                 <Button size="sm" variant="text">
                     <span>Log In</span>
                 </Button>
-                <ProfileMenu />
+                <ProfileMenu filename={filename} />
             </div>
             <MobileNav open={isNavOpen} className="overflow-scroll">
                 <NavList />
