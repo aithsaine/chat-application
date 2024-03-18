@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class ProfileController extends Controller
 {
@@ -36,6 +37,12 @@ class ProfileController extends Controller
         }
         if ($request->hasFile("picture")) {
             $request->validate(["picture" => "image", "mimes:png,jpg,jpeg"]);
+            if ($request->user()->picture !== "profile.png") {
+
+                if (Storage::exists('profiles/' . $request->user()->picture)) {
+                    Storage::delete('profiles/' . $request->user()->picture);
+                }
+            }
             $newName = uniqid() . "." . $request->file("picture")->getClientOriginalExtension();
             $savePict =   $request->file("picture")->storeAs("profiles", $newName);
             if ($savePict) {
