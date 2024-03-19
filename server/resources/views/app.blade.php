@@ -13,7 +13,7 @@
     <style>
         body {
 
-            background-color: rgb(253, 245, 233)
+            background-color: rgb(227, 226, 226)
         }
     </style>
     <!-- Scripts -->

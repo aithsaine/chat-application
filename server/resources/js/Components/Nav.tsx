@@ -240,7 +240,7 @@ export function Nav({ filename }) {
     }, []);
 
     return (
-        <Navbar className="mx-auto my-0 max-w-screen-xl sticky top-0 z-50 p-2 lg:rounded-full lg:pl-6">
+        <Navbar className="mx-auto my-0 max-w-screen-xl sticky top-0 z-50 p-2 m-0 lg:p">
             <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
 
                 <div className="hidden lg:block">

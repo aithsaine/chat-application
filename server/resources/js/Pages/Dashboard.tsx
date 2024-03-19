@@ -61,8 +61,8 @@ export default function Dashboard({ auth }: PageProps) {
             <Head title="Dashboard" />
 
             <div className="mt-0 relative flex p-1">
-                <div style={{ maxWidth: "15%" }} className="hidden  overflow-scroll  lg:block min-h-screen m-0  w-1/4  overflow-hidden  sm:rounded-lg">
-                    <div className='fixed flex flex-col p-2 overflow-scroll '>
+                <div style={{ maxWidth: "15%" }} className="hidden    lg:block bg-white m-0  w-1/4    sm:rounded-lg">
+                    <div className='fixed flex flex-col p-2 overflow-hidden '>
                         {items.map((item) => {
                             return <Link href={item.path} key={item.key} className='text-md m-2 font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
 

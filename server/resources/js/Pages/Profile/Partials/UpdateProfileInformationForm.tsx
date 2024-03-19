@@ -21,21 +21,15 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         picture: null,
         "_method": "patch"
     });
-    useEffect(() => {
-        if (recentlySuccessful) {
 
-            toast.success("Informations saved with success")
-
-        }
-    }, [recentlySuccessful])
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('profile.update',), {
             forceFormData: true,
         });
-        console.log("fname ", data.first_name)
-        console.log("lname ", data.last_name)
-        console.log("pict ", data.picture)
+
+
+
 
     };
 

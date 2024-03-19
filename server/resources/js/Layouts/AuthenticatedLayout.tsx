@@ -12,7 +12,7 @@ export default function Authenticated({ user, path, header, children }: PropsWit
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <main className='relative w-full'>
+        <main className='relative w-full mb-0'>
 
             <Nav filename={user.picture} img={path} />
             <Toaster position="bottom-right" />
