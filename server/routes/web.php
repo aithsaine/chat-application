@@ -21,6 +21,7 @@ Route::get('/storage/picture/{filename}', function ($filename) {
 
 Route::get('/feed', function () {
     return Inertia::render('Dashboard',[
+        "posts"=>\App\Http\Resources\PostResource::collection(\App\Models\Post::all())
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -32,7 +33,8 @@ Route::middleware('auth')->group(function () {
 Route::controller(\App\Http\Controllers\PostController::class)->group(function(){
     Route::get("posts","index")->name("post.index");
     Route::post("post/store","store")->name("post.store");
-});
+    Route::get("post/assets/posts/{folder}/{filename}","getPostAsset");
+})->middleware("auth");
 
 
 

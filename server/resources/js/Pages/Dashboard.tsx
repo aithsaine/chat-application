@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import {Head, Link, useForm, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { VideoCameraIcon, UserIcon, PaperAirplaneIcon, PresentationChartBarIcon, UserGroupIcon, ChatBubbleBottomCenterTextIcon, PencilSquareIcon, ArrowUpTrayIcon, ArrowUpOnSquareIcon, PaperClipIcon } from '@heroicons/react/24/solid';
 import { Button } from '@mui/material';
@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react';
 import axios from "axios"
 import Post from '../Components/Post'
 export default function Dashboard({ auth }: PageProps) {
+    const [posts,setPosts] = useState(usePage().props.posts??null)
 
     const { data, setData, post } = useForm({
         postFile: null,
@@ -17,21 +18,12 @@ const submit = (e)=>{
         e.preventDefault();
     post(route('post.store',), {
         forceFormData: true,
+
     });
+    setPosts(usePage().props.posts)
 }
-const [posts,setPosts] = useState([])
-    useEffect(() => {
-        const getPosts = async ()=>{
-
-        const response = await axios.get("posts")
-            if (response.data.status=="success"){
-                setPosts(response.data.posts);
-            }
-        }
-        getPosts()
 
 
-    }, []);
 
 
 
@@ -84,7 +76,7 @@ const [posts,setPosts] = useState([])
             <Head title="Dashboard" />
 
             <div className="mt-0 relative flex p-1">
-                <div style={{ maxWidth: "15%" }} className="hidden  min-h-screen  lg:block bg-white m-0  w-1/4    sm:rounded-lg">
+                <div style={{ maxWidth: "25%" }} className="hidden  min-h-screen  lg:block bg-inherit m-0  w-1/4    sm:rounded-lg">
                     <div className='fixed flex flex-col p-2 overflow-hidden '>
                         {items.map((item) => {
                             return <Link href={item.path} key={item.key} className='text-md m-2 font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
@@ -93,10 +85,10 @@ const [posts,setPosts] = useState([])
                     </div>
 
                 </div>
-                <div className="  p-2  flex flex-col items-start min-h-screen w-full lg:w-3/4  overflow-hidden sm:rounded-lg ">
+                <div className="  p-2  flex flex-col items-start min-h-screen w-1/2   overflow-hidden sm:rounded-lg ">
                     <h1 className='p-2 mb-2 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
 
-                    <div className=' w-full flex shadow-2xl flex-col items-center rounded-xl bg-white sm:w-3/4'>
+                    <div className=' w-full flex shadow-2xl flex-col items-center rounded-xl bg-white lg:w-3/4'>
 
 
                         <textarea name="" id="mytextarea" onChange={e=>setData("title",e.target.value)} placeholder={`What's on your mind, ${auth.user.first_name.toUpperCase()}?`} className='md:mx-4 mt-4 rounded-full bg-gray-200  text-md w-10/12 border-none  resize-none'  rows="1"></textarea>
@@ -109,12 +101,11 @@ const [posts,setPosts] = useState([])
                                 }} className='text-md  font-bold  text-sky-600 p-4'>File <PaperClipIcon className='w-6 h-6 inline-block mx-1 ' />
                                 </button >
                                 <button type={"submit"}  className='text-md  font-bold  text-sky-600 p-4'>Send<PaperAirplaneIcon className='w-6 h-6 inline-block mx-1 text-sky-600' /></button>
-                            <input type={"submit"} value={"sends"}/>
                             </div>
                         </form>
 
                     </div>
-                    {posts.map(item=><Post title={item.title} username={item.user_name} date={item.date} files={item.files}/>)}
+                    {posts&&posts.data.map(item=><Post title={item.title} username={item.user_name} date={item.date} filename={item.user_picture}  files={item.files}/>)}
 
 
 
@@ -125,7 +116,7 @@ const [posts,setPosts] = useState([])
 
 
                 </div>
-                <div className=" sm:block bg-sk-600 p-4 md:w-1/4 text-center bg-white fixed right-0  min-h-screen hidden   overflow-hidden shadow-sm sm:rounded-lg">
+                <div className=" md:block  hidden bg-sk-600 p-4 md:w-1/6  text-center bg-inherit fixed right-0  min-h-screen   overflow-hidden  sm:rounded-lg">
                     You're logged in!
 
                 </div>

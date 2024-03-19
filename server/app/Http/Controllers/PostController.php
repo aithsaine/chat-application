@@ -7,6 +7,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use PHPUnit\Runner\ErrorException;
 
@@ -32,6 +33,15 @@ class PostController extends Controller
         }
         $newPost->save();
                 return Redirect::route('dashboard');
+
+    }
+
+    public function getPostAsset($folder, $filename)
+    {
+        $filePath = Storage::path( "posts/".$folder."/".$filename);
+
+        return response()->file($filePath);
+
 
     }
 }

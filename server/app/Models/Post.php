@@ -20,7 +20,6 @@ class Post extends Model
         $request->validate([
             "title"=>"required|max:2000",
             "user_id"=>"required|exists:users,id",
-            "postFile"=>"required|file"
         ]);
 
     }
