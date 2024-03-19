@@ -6,8 +6,12 @@ import { VideoCameraIcon, UserIcon, PaperAirplaneIcon, PresentationChartBarIcon,
 import {useEffect, useState} from 'react';
 import axios from "axios"
 import Post from '../Components/Post'
+ import Skelton, {SkeletonTheme} from "react-loading-skeleton"
+import Skeleton from "react-loading-skeleton";
+import ContentLoader from "react-content-loader";
 export default function Dashboard({ auth }: PageProps) {
     const [posts,setPosts] = useState([])
+    console.log(window.scroll())
     const getPosts = async ()=>{
         const response = await axios.get("posts/index")
         if (response.data.status=="success")
@@ -115,18 +119,44 @@ const submit = (e)=>{
                         </form>
 
                     </div>
-                    {posts&&posts.map(item=><Post title={item.title} username={item.user_name} date={item.date} filename={item.user_picture}  files={item.files}/>)}
+                    <div>
 
 
+                    </div>
 
-
-
-
-
-
+                    {posts && posts.map(item => <Post title={item.title} username={item.user_name} date={item.date}
+                                                      filename={item.user_picture} files={item.files}/>)}
+                    <ContentLoader
+                        speed={4}
+                        className={" w-3/4"}
+                        viewBox="0 0 400 160"
+                        backgroundColor="#f3f3f3"
+                        foregroundColor="#ecebeb"
+                    >
+                        <rect x="48" y="8" rx="18" ry="10" width="88" height="15"/>
+                        <rect x="48" y="26" rx="3" ry="3" width="52" height="10"/>
+                        <rect x="0" y="56" rx="3" ry="3" width="410" height="15"/>
+                        <rect x="0" y="72" rx="3" ry="3" width="380" height="15"/>
+                        <rect x="0" y="88" rx="3" ry="3" width="178" height="15"/>
+                        <circle cx="20" cy="20" r="20"/>
+                    </ContentLoader>
+                    <ContentLoader
+                        speed={2}
+                        className={" w-3/4"}
+                        viewBox="0 0 400 160"
+                        backgroundColor="#f3f3f3"
+                        foregroundColor="#ecebeb"
+                    >
+                        <rect x="48" y="8" rx="18" ry="10" width="88" height="30"/>
+                        <rect x="48" y="26" rx="3" ry="3" width="52" height="10"/>
+                        <rect x="0" y="56" rx="3" ry="3" width="410" height="15"/>
+                        <rect x="0" y="72" rx="3" ry="3" width="380" height="15"/>
+                        <rect x="0" y="88" rx="3" ry="3" width="178" height="15"/>
+                    </ContentLoader>
 
                 </div>
-                <div className=" md:block  hidden bg-sk-600 p-4 md:w-1/6  text-center bg-inherit fixed right-0  min-h-screen   overflow-hidden  sm:rounded-lg">
+                <div
+                    className=" md:block  hidden bg-sk-600 p-4 md:w-1/6  text-center bg-inherit fixed right-0  min-h-screen   overflow-hidden  sm:rounded-lg">
                     You're logged in!
 
                 </div>
