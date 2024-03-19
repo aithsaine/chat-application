@@ -3,7 +3,9 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { VideoCameraIcon, UserIcon, PaperAirplaneIcon, PresentationChartBarIcon, UserGroupIcon, ChatBubbleBottomCenterTextIcon, PencilSquareIcon, ArrowUpTrayIcon, ArrowUpOnSquareIcon, PaperClipIcon } from '@heroicons/react/24/solid';
 import { Button } from '@mui/material';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
+import axios from "axios"
+import Post from '../Components/Post'
 export default function Dashboard({ auth }: PageProps) {
 
     const { data, setData, post } = useForm({
@@ -17,6 +19,19 @@ const submit = (e)=>{
         forceFormData: true,
     });
 }
+const [posts,setPosts] = useState([])
+    useEffect(() => {
+        const getPosts = async ()=>{
+
+        const response = await axios.get("posts")
+            if (response.data.status=="success"){
+                setPosts(response.data.posts);
+            }
+        }
+        getPosts()
+
+
+    }, []);
 
 
 
@@ -97,7 +112,9 @@ const submit = (e)=>{
                             <input type={"submit"} value={"sends"}/>
                             </div>
                         </form>
+
                     </div>
+                    {posts.map(item=><Post title={item.title} username={item.user_name} date={item.date} files={item.files}/>)}
 
 
 

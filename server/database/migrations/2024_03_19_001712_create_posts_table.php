@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->string('id')->primary()->unique();
+            $table->id();
             $table->text("title");
             $table->foreignId("user_id");
             $table->boolean("hasAssets")->default(false);

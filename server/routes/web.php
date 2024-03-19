@@ -20,7 +20,8 @@ Route::get('/storage/picture/{filename}', function ($filename) {
 })->middleware("auth")->name("picture.get");
 
 Route::get('/feed', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard',[
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -29,8 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::controller(\App\Http\Controllers\PostController::class)->group(function(){
+    Route::get("posts","index")->name("post.index");
     Route::post("post/store","store")->name("post.store");
 });
+
 
 
 

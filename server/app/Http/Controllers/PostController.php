@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,17 +12,23 @@ use PHPUnit\Runner\ErrorException;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        return response()->json(["posts"=>PostResource::collection(Post::all()),"status"=>"success"]);
+
+    }
     public function store(Request $request)
     {
         Post::validation($request);
         $newPost = new Post();
-        $id = uniqid();
-        $newPost->id = $id;
         $newPost->title = $request->title;
         $newPost->user_id = $request->user_id;
+        $newPost->save();
+
         if($request->hasFile("postFile"))
         {
-            $request->file("postFile")->storeAs("posts/{$id}/",$id.".".$request->file("postFile")->getClientOriginalExtension());
+            $newPost->hasAssets = true;
+            $request->file("postFile")->store("posts/{$newPost->id}/");
         }
         $newPost->save();
                 return Redirect::route('dashboard');
