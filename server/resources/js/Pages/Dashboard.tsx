@@ -2,13 +2,23 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link, useForm, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { VideoCameraIcon, UserIcon, PaperAirplaneIcon, PresentationChartBarIcon, UserGroupIcon, ChatBubbleBottomCenterTextIcon, PencilSquareIcon, ArrowUpTrayIcon, ArrowUpOnSquareIcon, PaperClipIcon } from '@heroicons/react/24/solid';
-import { Button } from '@mui/material';
+
 import {useEffect, useState} from 'react';
 import axios from "axios"
 import Post from '../Components/Post'
 export default function Dashboard({ auth }: PageProps) {
-    const [posts,setPosts] = useState(usePage().props.posts??null)
+    const [posts,setPosts] = useState([])
+    const getPosts = async ()=>{
+        const response = await axios.get("posts/index")
+        if (response.data.status=="success")
+        {
+            setPosts(response.data.posts)
+        }
+    }
+    useEffect(() => {
 
+        getPosts()
+    }, []);
     const { data, setData, post } = useForm({
         postFile: null,
         title: "",
@@ -20,7 +30,7 @@ const submit = (e)=>{
         forceFormData: true,
 
     });
-    setPosts(usePage().props.posts)
+    getPosts()
 }
 
 
@@ -105,7 +115,7 @@ const submit = (e)=>{
                         </form>
 
                     </div>
-                    {posts&&posts.data.map(item=><Post title={item.title} username={item.user_name} date={item.date} filename={item.user_picture}  files={item.files}/>)}
+                    {posts&&posts.map(item=><Post title={item.title} username={item.user_name} date={item.date} filename={item.user_picture}  files={item.files}/>)}
 
 
 
