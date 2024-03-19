@@ -63,4 +63,9 @@ class User extends Authenticatable
             "gender" => "required"
         ]);
     }
+    public  function posts()
+    {
+        return $this->hasMany(Post::class);
+
+    }
 }
