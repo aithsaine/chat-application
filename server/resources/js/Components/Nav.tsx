@@ -94,9 +94,7 @@ function ProfileMenu({ filename }) {
                 >
                     <img
                         id="pictureProfile"
-                        alt="tania andrew"
-                        className="   w-30 h-30"
-                        src={image}
+                        className={'w-10 h-10 rounded-full inline-block mx-2 overflow-hidden object-cover'}                        src={image}
                         style={{ borderRadius: "100%" }}
                         width={40}
                         height={40}

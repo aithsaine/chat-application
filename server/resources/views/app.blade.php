@@ -7,13 +7,16 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad&family=Hedvig+Letters+Sans&family=Kalnia:wght@500&family=Molengo&display=swap" rel="stylesheet">    <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <style>
         body {
-
-            background-color: rgb(227, 226, 226)
+            font-family: "Molengo", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            background-color: rgba(89, 89, 79, 0.13)
         }
     </style>
     <!-- Scripts -->

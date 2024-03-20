@@ -22,11 +22,18 @@ class PostResource extends JsonResource
         if(\Carbon\Carbon::parse($dt)->diffInHours(Carbon::now())<24){
             return (int)\Carbon\Carbon::parse($dt)->diffInHours(Carbon::now())." hour";
         }
+        if(\Carbon\Carbon::parse($dt)->diffInDays(Carbon::now())<7){
+            return (int)\Carbon\Carbon::parse($dt)->diffInDays(Carbon::now())." days";
+        }
         if (\Carbon\Carbon::parse($dt)->diffInWeeks(Carbon::now())<=4)
         {
             return (int)\Carbon\Carbon::parse($dt)->diffInWeeks(Carbon::now())." week";
         }
-        return (int)\Carbon\Carbon::parse($dt)->diffInMonths(Carbon::now())." months";
+        if(\Carbon\Carbon::parse($dt)->diffInMonths(Carbon::now())<12){
+            return (int)\Carbon\Carbon::parse($dt)->diffInMonths(Carbon::now())." months";
+        }
+
+        return (int)\Carbon\Carbon::parse($dt)->diffInYears(Carbon::now())." years";
 
 
 
