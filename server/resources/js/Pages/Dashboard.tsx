@@ -10,19 +10,40 @@ import Post from '../Components/Post'
 import Skeleton from "react-loading-skeleton";
 import ContentLoader from "react-content-loader";
 export default function Dashboard({ auth }: PageProps) {
+    const [page,setPage] = useState(1)
     const [posts,setPosts] = useState([])
     console.log(window.scroll())
+    const [pers,setPers] = useState(0)
     const getPosts = async ()=>{
-        const response = await axios.get("posts/index")
+        const response = await axios.get(`posts/index?page=${page}`)
         if (response.data.status=="success")
         {
-            setPosts(response.data.posts)
+            if(posts.length<response.data.length){
+            setPosts([...posts,...response.data.posts])
+                setPers(0)
+            setPage(page+1)
+            }
+
         }
     }
-    useEffect(() => {
 
+    window.addEventListener("scroll",(item)=>{
+
+        var h = document.documentElement,
+            b = document.body,
+            st = 'scrollTop',
+            sh = 'scrollHeight';
+        let pers =  (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+        if (pers>=90)
+        {
+            console.log(pers)
+            setPers(pers)
+        }
+    })
+    useEffect(() => {
+        if(pers>95)
         getPosts()
-    }, []);
+    }, [pers]);
     const { data, setData, post } = useForm({
         postFile: null,
         title: "",

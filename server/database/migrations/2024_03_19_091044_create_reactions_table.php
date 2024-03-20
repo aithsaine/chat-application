@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('reactions', function (Blueprint $table) {
             $table->id();
+            $table->string("type");//like or dislike
+            $table->foreignId("user_id");
+            $table->foreignId("post_id");
             $table->timestamps();
         });
     }

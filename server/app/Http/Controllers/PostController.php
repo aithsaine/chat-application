@@ -15,7 +15,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        return response()->json(["posts"=>PostResource::collection(Post::orderByDesc("created_at")->get()),"status"=>"success"]);
+        $posts = PostResource::collection(Post::orderByDesc("created_at")->paginate(3));
+        return response()->json(["posts"=>$posts,"status"=>"success","length"=>count(Post::all())]);
 
     }
     public function store(Request $request)
