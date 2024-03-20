@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Reaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 class PostResource extends JsonResource
 {
@@ -49,9 +51,13 @@ class PostResource extends JsonResource
             "user_picture"=>$this->user->picture,
             "user_name" =>$this->user->first_name." ".$this->user->last_name,
             "user_id"=>$this->user_id,
+            "id"=>$this->id,
             "title"=>$this->title,
             "files"=>$files,
-            "date"=>self::getDate($this->created_at)
+            "likes"=>count(Reaction::where("post_id",$this->id)->where("type","like")->get()),
+            "dislikes"=>count(Reaction::where("post_id",$this->id)->where("type","dislike")->get()),
+            "date"=>self::getDate($this->created_at),
+            "reaction"=>Reaction::where("post_id",$this->id)->where("user_id",Auth::user()->id)->first()->type??"none"
         ];
     }
 }

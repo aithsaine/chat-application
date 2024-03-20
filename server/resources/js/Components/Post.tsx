@@ -3,10 +3,29 @@ import {UserCircleIcon,HandThumbUpIcon,HandThumbDownIcon} from "@heroicons/react
 import axios from "axios";
 import {useEffect, useState} from "react";
 
-export  default  function Post({username,title,files,date,filename}){
+export  default  function Post({username,title,files,date,filename,post_id,user_id,likes,dislikes,reaction}){
+    const [lks,setLikes] = useState(likes)
+    const [dsl,setDislikes] = useState(dislikes)
+    const [reactType,setReactType] = useState(reaction)
+    const submitHandler = async (e,type)=>{
+        e.preventDefault()
+        const resp = await axios.post("reaction/store",{type,user_id,post_id})
+        if(resp.data.status=="success"){
+            setLikes(resp.data.post.likes)
+            setDislikes(resp.data.post.dislikes)
+            setReactType(resp.data.post.reaction)
+
+        }
+         }
+
+
+
+
+
     const [image,setImage] = useState("")
     useEffect(() => {
         const getPict = async () => {
+
             const response = await axios.get(`/storage/picture/${filename}`, {
                 responseType: 'blob',
             })
@@ -32,16 +51,18 @@ export  default  function Post({username,title,files,date,filename}){
             {files[0]&&<img className={` w-full border border-2 rounded-xl`} src={`http://localhost:8000/post/assets/${files[0]}`}/>}
 
             <div className={"m-4 flex items-center justify-between w-full"}>
-                <div>
+<div>
 
-                <span className={"text-sm"}>23</span>
-                <button><HandThumbUpIcon className={'w-10 h-6 inline-block  text-green-300'}/></button>
-                <button><HandThumbDownIcon
-                    className={'w-10 h-6 inline-block  text-red-300'}/></button>
-                <span className={"text-sm"}>12</span>
-                </div>
+                    <span className={"text-sm"}>{lks}</span>
+                    <label onClick={e=>submitHandler(e,"like")} htmlFor={"like"}><HandThumbUpIcon
+                        className={`w-10 h-6 inline-block cursor-pointer ${reactType=='like'?"text-green-800":"text-green-100"}`}/></label>
+                    <label onClick={e=>submitHandler(e,"dislike")} htmlFor={"dislike"} ><HandThumbDownIcon
+                        className={`w-10 h-6 inline-block cursor-pointer ${reactType=="dislike"?'text-red-800':"text-red-100"}`}/></label>
+                    <span className={"text-sm"}>{dsl}</span>
+</div>
+
                 <div className={"me-6 text-sm"}>
-                    <span>Comment</span>
+                <span>Comment</span>
                 </div>
 
             </div>

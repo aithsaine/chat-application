@@ -12,7 +12,6 @@ import ContentLoader from "react-content-loader";
 export default function Dashboard({ auth }: PageProps) {
     const [page,setPage] = useState(1)
     const [posts,setPosts] = useState([])
-    console.log(window.scroll())
     const [pers,setPers] = useState(0)
     const getPosts = async ()=>{
         const response = await axios.get(`posts/index?page=${page}`)
@@ -26,6 +25,9 @@ export default function Dashboard({ auth }: PageProps) {
 
         }
     }
+    useEffect(() => {
+        getPosts()
+    }, []);
 
     window.addEventListener("scroll",(item)=>{
 
@@ -36,7 +38,6 @@ export default function Dashboard({ auth }: PageProps) {
         let pers =  (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
         if (pers>=90)
         {
-            console.log(pers)
             setPers(pers)
         }
     })
@@ -132,7 +133,6 @@ const submit = (e)=>{
                             <div className='flex w-full items-center justify-around'>
                                 <button type='button' onClick={e => {
                                     document.getElementById("post-file").click()
-                                    console.log(data.file)
                                 }} className='text-md  font-bold  text-sky-600 p-4'>File <PaperClipIcon className='w-6 h-6 inline-block mx-1 ' />
                                 </button >
                                 <button type={"submit"}  className='text-md  font-bold  text-sky-600 p-4'>Send<PaperAirplaneIcon className='w-6 h-6 inline-block mx-1 text-sky-600' /></button>
@@ -145,7 +145,7 @@ const submit = (e)=>{
 
                     </div>
 
-                    {posts && posts.map(item => <Post title={item.title} username={item.user_name} date={item.date}
+                    {posts && posts.map(item => <Post likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={auth.user.id} username={item.user_name} date={item.date} post_id={item.id}
                                                       filename={item.user_picture} files={item.files}/>)}
                     <ContentLoader
                         speed={4}

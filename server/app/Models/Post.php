@@ -21,6 +21,10 @@ class Post extends Model
             "title"=>"required|max:2000",
             "user_id"=>"required|exists:users,id",
         ]);
+    }
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class);
 
     }
 
