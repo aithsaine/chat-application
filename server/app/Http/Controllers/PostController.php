@@ -13,10 +13,17 @@ use PHPUnit\Runner\ErrorException;
 
 class PostController extends Controller
 {
+
     public function index()
     {
         $posts = PostResource::collection(Post::orderByDesc("created_at")->paginate(15));
         return response()->json(["posts"=>$posts,"status"=>"success","length"=>count(Post::all())]);
+    }
+    public function show($post_id)
+    {
+        $post = PostResource::make(Post::where("id",$post_id)->first());
+        $comments = $post->comments;
+        return response()->json(["post"=>$post,"comments"=>$comments,"status"=>"success"]);
 
     }
     public function store(Request $request)

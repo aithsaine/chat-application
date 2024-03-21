@@ -115,7 +115,7 @@ const submit = (e)=>{
                 <div  className="hidden  min-h-screen  lg:block bg-inherit m-0  w-1/4    sm:rounded-lg">
                     <div className='fixed flex flex-col p-2 overflow-hidden '>
                         {items.map((item) => {
-                            return <Link href={item.path} key={item.key} className='text-md m-2 font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
+                            return <Link href={item.path} key={item.key} className='text-sm m-2 font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
 
                         })}
                     </div>
@@ -124,13 +124,11 @@ const submit = (e)=>{
                 <div className="  p-2  flex flex-col items-start min-h-screen lg:w-1/2 sm:w-3/4   overflow-hidden sm:rounded-lg ">
                     <h1 className='p-2 mb-2 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
 
-                    <div className=' w-full flex shadow-2xl flex-col items-center rounded-xl bg-white lg:w-3/4'>
-
-
-                        <textarea name="" id="mytextarea" onChange={e=>setData("title",e.target.value)} placeholder={`What's on your mind, ${auth.user.first_name.toUpperCase()}?`} className='md:mx-2 mt-2 rounded-xl bg-gray-200  text-md w-10/12 border-none  resize-none'  rows="2"></textarea>
-                        <form onSubmit={submit} encType="multipart/form-data" className="mt-2 space-y-2">
+                    <div className=' w-full px-4 flex shadow-2xl flex-col items-center rounded-xl bg-white lg:w-3/4'>
+                        <textarea name="" id="mytextarea" onChange={e=>setData("title",e.target.value)} placeholder={`What's on your mind, ${auth.user.first_name.toUpperCase()}?`} className='w-full mt-2 rounded-xl bg-gray-100  text-md border-none  resize-none'  rows="2"></textarea>
+                        <form onSubmit={submit} encType="multipart/form-data" className="w-full space-y-2">
                             <input type="file" onChange={e => setData("postFile", e.target.files[0]!)} name="Postfile" className='hidden' id="post-file" />
-                            <div className='flex w-full items-center justify-around'>
+                            <div className='flex w-full  items-center justify-between'>
                                 <button type='button' onClick={e => {
                                     document.getElementById("post-file").click()
                                 }} className='text-md  font-bold  text-sky-600 p-4'>File <PaperClipIcon className='w-6 h-6 inline-block mx-1 ' />

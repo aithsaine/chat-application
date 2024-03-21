@@ -2,22 +2,26 @@
 import {UserCircleIcon,HandThumbUpIcon,HandThumbDownIcon} from "@heroicons/react/24/solid"
 import axios from "axios";
 import {useEffect, useState} from "react";
-import { EllipsisHorizontalIcon,ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid';
+import { EllipsisHorizontalIcon,ChatBubbleBottomCenterTextIcon,XCircleIcon } from '@heroicons/react/24/solid';
+import Comment from "@/Components/Comment";
 
-export  default  function Post({username,title,files,date,filename,post_id,user_id,likes,dislikes,reaction}){
+export  default  function Post({username,title,files,date,filename,post_id,user_id,likes,dislikes,reaction})
+{
     const [lks,setLikes] = useState(likes)
     const [dsl,setDislikes] = useState(dislikes)
     const [reactType,setReactType] = useState(reaction)
-    const submitHandler = async (e,type)=>{
+    const submitHandler = async (e,type)=> {
         e.preventDefault()
-        const resp = await axios.post("reaction/store",{type,user_id,post_id})
-        if(resp.data.status=="success"){
+        const resp = await axios.post("reaction/store", {type, user_id, post_id})
+        if (resp.data.status == "success") {
             setLikes(resp.data.post.likes)
             setDislikes(resp.data.post.dislikes)
             setReactType(resp.data.post.reaction)
 
         }
-         }
+
+    }
+    const [load,setLoad] = useState(false)
 
 
 
@@ -43,6 +47,8 @@ export  default  function Post({username,title,files,date,filename,post_id,user_
     }, [])
 
     return(
+        <>
+
         <div  style={{minHeight: "20px"}}
              className=' w-full my-4 relative flex shadow-xl flex-col items-start mt-4 rounded-xl bg-white lg:w-3/4'>
             <span className={"mt-4"}>
@@ -66,10 +72,16 @@ export  default  function Post({username,title,files,date,filename,post_id,user_
 </div>
 
                 <div className={"me-6 t text-sky-600"}>
-                <button title={"comments"}><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>
+                <button onClick={e=>setLoad(true)} title={"comments"}><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>  {/*"comments button"*/}
+                    {    load && (
+
+                    <Comment isLoad={load} setLoad={setLoad} post_id={post_id}/>
+                    )}
                 </div>
 
             </div>
+
         </div>
+        </>
     )
 }
