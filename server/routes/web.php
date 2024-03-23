@@ -43,6 +43,10 @@ Route::controller(\App\Http\Controllers\ReactionController::class)->group(functi
     Route::post("reaction/store","store")->name("reaction.store");
 })->middleware("auth");
 
+Route::get("feed/upload/file",function (){
+    return Inertia::render("uploadProfilePicture");
+})->middleware("auth") ;
+
 
 
 require __DIR__ . '/auth.php';
