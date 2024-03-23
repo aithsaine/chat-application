@@ -12,28 +12,32 @@ class PostResource extends JsonResource
 {
     public static function  getDate($dt)
     {
+        if (\Carbon\Carbon::parse($dt)->diffInSeconds(Carbon::now()) <5)
+        {
+            return "just now";
+        }
         if (\Carbon\Carbon::parse($dt)->diffInSeconds(Carbon::now())<60)
         {
-            return (int)\Carbon\Carbon::parse($dt)->diffInSeconds(Carbon::now())." second";
+            return (int)\Carbon\Carbon::parse($dt)->diffInSeconds(Carbon::now())." seconds ago";
         }
         if(\Carbon\Carbon::parse($dt)->diffInMinutes(Carbon::now())<60){
-            return (int)\Carbon\Carbon::parse($dt)->diffInMinutes(Carbon::now())." minute";
+            return (int)\Carbon\Carbon::parse($dt)->diffInMinutes(Carbon::now())." minutes ago";
         }
         if(\Carbon\Carbon::parse($dt)->diffInHours(Carbon::now())<24){
-            return (int)\Carbon\Carbon::parse($dt)->diffInHours(Carbon::now())." hour";
+            return (int)\Carbon\Carbon::parse($dt)->diffInHours(Carbon::now())." hours ago";
         }
         if(\Carbon\Carbon::parse($dt)->diffInDays(Carbon::now())<7){
-            return (int)\Carbon\Carbon::parse($dt)->diffInDays(Carbon::now())." days";
+            return (int)\Carbon\Carbon::parse($dt)->diffInDays(Carbon::now())." days ago";
         }
         if (\Carbon\Carbon::parse($dt)->diffInWeeks(Carbon::now())<=4)
         {
-            return (int)\Carbon\Carbon::parse($dt)->diffInWeeks(Carbon::now())." week";
+            return (int)\Carbon\Carbon::parse($dt)->diffInWeeks(Carbon::now())." weeks ago";
         }
         if(\Carbon\Carbon::parse($dt)->diffInMonths(Carbon::now())<12){
-            return (int)\Carbon\Carbon::parse($dt)->diffInMonths(Carbon::now())." months";
+            return (int)\Carbon\Carbon::parse($dt)->diffInMonths(Carbon::now())." months ago";
         }
 
-        return (int)\Carbon\Carbon::parse($dt)->diffInYears(Carbon::now())." years";
+        return (int)\Carbon\Carbon::parse($dt)->diffInYears(Carbon::now())." years ago";
 
 
 

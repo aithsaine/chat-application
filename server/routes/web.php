@@ -45,7 +45,7 @@ Route::controller(\App\Http\Controllers\ReactionController::class)->group(functi
 
 Route::get("feed/upload/file",function (){
     return Inertia::render("uploadProfilePicture");
-})->middleware("auth") ;
+})->middleware("auth")->name("feed.upload.file") ;
 
 
 

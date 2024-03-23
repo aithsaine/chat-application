@@ -17,14 +17,13 @@ class PostController extends Controller
     public function index()
     {
         $posts = PostResource::collection(Post::orderByDesc("created_at")->paginate(15));
-        return response()->json(["posts"=>$posts,"status"=>"success","length"=>count(Post::all())]);
+        return response()->json(["posts" => $posts, "status" => "success", "length" => count(Post::all())]);
     }
     public function show($post_id)
     {
-        $post = PostResource::make(Post::where("id",$post_id)->first());
+        $post = PostResource::make(Post::where("id", $post_id)->first());
         $comments = $post->comments;
-        return response()->json(["post"=>$post,"comments"=>$comments,"status"=>"success"]);
-
+        return response()->json(["post" => $post, "comments" => $comments, "status" => "success"]);
     }
     public function store(Request $request)
     {
@@ -34,22 +33,18 @@ class PostController extends Controller
         $newPost->user_id = $request->user_id;
         $newPost->save();
 
-        if($request->hasFile("postFile"))
-        {
+        if ($request->hasFile("postFile")) {
             $newPost->hasAssets = true;
             $request->file("postFile")->store("posts/{$newPost->id}/");
         }
         $newPost->save();
-                return Redirect::route('dashboard');
-
+        return response()->json(["message" => "post created with success", "post" => PostResource::make($newPost), "status" => "success"]);
     }
 
     public function getPostAsset($folder, $filename)
     {
-        $filePath = Storage::path( "posts/".$folder."/".$filename);
+        $filePath = Storage::path("posts/" . $folder . "/" . $filename);
 
         return response()->file($filePath);
-
-
     }
 }
