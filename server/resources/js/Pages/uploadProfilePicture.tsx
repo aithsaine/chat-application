@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 
-function FileUpload({auth}) {
+function FileUpload({ auth }) {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const handleFileChange = (e) => {
@@ -33,20 +33,23 @@ function FileUpload({auth}) {
     return (
         <Authenticated user={auth.user} header={<></>}>
 
-            <div onClick={e=>document.getElementById("fileInput").click()} className=" flex items-center justify-center h-full mt-48 ">
-
-                <input type={"file"} id={"fileInput"} className={"hidden"} onChange={handleFileChange}/>
+            <div className='bg-sky-600 min-h-screen flex flex-col items-center'>
+                <div onClick={e => document.getElementById("fileInput").click()} className='h-1/2'>
+                    <input type={"file"} id={"fileInput"} className={"hidden"} onChange={handleFileChange} />
                     <img id={"previewImage"} className="bg-sky-200 w-64 h-64 rounded-full absolute object-cover"
-                         src=""
-                         alt=""/>
+                        src=""
+                        alt="" />
                     <div
                         className="w-64 h-64 group hover:bg-gray-200 opacity-60 rounded-full absolute flex justify-center items-center cursor-pointer transition duration-500">
                         <img className="hidden group-hover:block w-12"
-                             src="https://www.svgrepo.com/show/33565/upload.svg" alt=""/>
+                            src="https://www.svgrepo.com/show/33565/upload.svg" alt="" />
                     </div>
+                </div>
 
+
+
+                <Button variant="contained">Save</Button>
             </div>
-            <Button variant="contained">Save</Button>
 
 
         </Authenticated>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\InAuthenticatedMiddleware;
 use Illuminate\Foundation\Application;
@@ -22,8 +23,8 @@ Route::get('/storage/picture/{filename}', function ($filename) {
 })->middleware("auth")->name("picture.get");
 
 Route::get('/feed', function () {
-    return Inertia::render('Dashboard',[
-        "posts"=>\App\Http\Resources\PostResource::collection(\App\Models\Post::all())
+    return Inertia::render('Dashboard', [
+        "posts" => \App\Http\Resources\PostResource::collection(\App\Models\Post::all())
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -32,20 +33,25 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::controller(\App\Http\Controllers\PostController::class)->group(function(){
-    Route::get("posts/index","index")->name("post.index");
-    Route::get("posts/{post_id}/show","show")->name("post.show");
-    Route::post("post/store","store")->name("post.store");
-    Route::get("post/assets/posts/{folder}/{filename}","getPostAsset");
+Route::controller(\App\Http\Controllers\PostController::class)->group(function () {
+    Route::get("posts/index", "index")->name("post.index");
+    Route::get("posts/{post_id}/show", "show")->name("post.show");
+    Route::post("post/store", "store")->name("post.store");
+    Route::get("post/assets/posts/{folder}/{filename}", "getPostAsset");
 })->middleware("auth");
 
-Route::controller(\App\Http\Controllers\ReactionController::class)->group(function (){
-    Route::post("reaction/store","store")->name("reaction.store");
+Route::controller(\App\Http\Controllers\ReactionController::class)->group(function () {
+    Route::post("reaction/store", "store")->name("reaction.store");
 })->middleware("auth");
 
-Route::get("feed/upload/file",function (){
+Route::get("feed/upload/file", function () {
     return Inertia::render("uploadProfilePicture");
-})->middleware("auth")->name("feed.upload.file") ;
+})->middleware("auth")->name("feed.upload.file");
+
+
+Route::controller(AccountController::class)->group(function () {
+    Route::get("account/{user_id}/show", "show")->name("account.show");
+});
 
 
 
