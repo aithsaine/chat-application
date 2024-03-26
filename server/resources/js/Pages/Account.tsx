@@ -1,14 +1,35 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Head } from "@inertiajs/react"
+import axios from 'axios';
 
 export default function Account({ auth, user }) {
     const [posts, setPosts] = useState([]);
+    const [image, setImage] = useState("")
+    useEffect(() => {
+        const getPict = async () => {
+            const response = await axios.get(`/storage/picture/${user.picture}`, {
+                responseType: 'blob',
+            })
+            if (response.status == 200) {
+
+                const blobUrl = URL.createObjectURL(response.data);
+                setImage(blobUrl)
+                console.log(response.data)
+            }
+
+        }
+        getPict();
+
+    }, [])
     return (
         <Authenticated user={user} header={<></>}>
+            <Head title={`${user.first_name} ${user.last_name}`} />
+
             <div className="dark:!bg-navy-800 shadow-shadow-500 shadow-3xl rounded-primary relative  flex h-full w-full  flex-col items-center bg-white bg-cover bg-clip-border p-[16px]  dark:shadow-none">
                 <div className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover" style={{ backgroundImage: 'url("https://i.ibb.co/FWggPq1/banner.png")' }}>
                     <div className="absolute -bottom-12 flex h-[88px] w-[88px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
-                        <img className="h-full w-full rounded-full" src="https://i.ibb.co/6YbS9ff/avatar11.png" alt="" />
+                        <img className="h-full w-full rounded-full object-cover" src={image} alt="" />
                     </div>
                 </div>
                 <div className="mt-16 flex flex-col items-center">

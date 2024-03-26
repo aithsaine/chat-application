@@ -8,6 +8,7 @@ use Inertia\Inertia;
 
 class AccountController extends Controller
 {
+    
     public function show($user_id)
     {
         $user = User::find($user_id);

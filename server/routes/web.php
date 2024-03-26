@@ -51,7 +51,7 @@ Route::get("feed/upload/file", function () {
 
 Route::controller(AccountController::class)->group(function () {
     Route::get("account/{user_id}/show", "show")->name("account.show");
-});
+})->middleware(['auth']);
 
 
 

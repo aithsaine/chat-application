@@ -93,7 +93,7 @@ function ProfileMenu({ filename }) {
                     className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto sticky-top"
                 >
                     <img
-                        className={'w-10 h-10 rounded-full inline-block mx-2 overflow-hidden object-cover'}    src={image}
+                        className={'w-10 h-10 rounded-full inline-block mx-2 overflow-hidden object-cover'} src={image}
                         width={40}
                         height={40}
                     />
