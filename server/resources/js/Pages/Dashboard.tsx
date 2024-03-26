@@ -150,7 +150,7 @@ export default function Dashboard({ auth }: PageProps) {
 
                     </div>
 
-                    {posts && posts.map(item => <Post likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={auth.user.id} username={item.user_name} date={item.date} post_id={item.id}
+                    {posts && posts.map(item => <Post likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={item.user_id} username={item.user_name} date={item.date} post_id={item.id}
                         filename={item.user_picture} files={item.files} />)}
                     <ContentLoader
                         speed={4}

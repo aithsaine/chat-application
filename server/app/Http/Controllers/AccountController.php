@@ -11,8 +11,10 @@ class AccountController extends Controller
     public function show($user_id)
     {
         $user = User::find($user_id);
-        return Inertia::render("Account", [
-            "user" => $user
-        ]);
+        if ($user)
+            return Inertia::render("Account", [
+                "user" => $user
+            ]);
+        return Inertia::render("404");
     }
 }
