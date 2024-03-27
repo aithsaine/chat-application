@@ -38,7 +38,6 @@ export default function Post({ username, title, files, date, filename, post_id, 
 
                 const blobUrl = URL.createObjectURL(response.data);
                 setImage(blobUrl)
-                console.log(response.data)
             }
 
         }

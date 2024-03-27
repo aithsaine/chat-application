@@ -6,11 +6,8 @@ import { VideoCameraIcon, UserIcon, PaperAirplaneIcon, PresentationChartBarIcon,
 import { useEffect, useState } from 'react';
 import axios from "axios"
 import Post from '../Components/Post'
-import Skelton, { SkeletonTheme } from "react-loading-skeleton"
-import Skeleton from "react-loading-skeleton";
 import ContentLoader from "react-content-loader";
 import toast from 'react-hot-toast';
-import { object } from 'prop-types';
 export default function Dashboard({ auth }: PageProps) {
     const [page, setPage] = useState(1)
     const [posts, setPosts] = useState([])
@@ -150,7 +147,7 @@ export default function Dashboard({ auth }: PageProps) {
 
                     </div>
 
-                    {posts && posts.map(item => <Post likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={item.user_id} username={item.user_name} date={item.date} post_id={item.id}
+                    {posts && posts.map(item => <Post likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={auth.user.id} username={item.user_name} date={item.date} post_id={item.id}
                         filename={item.user_picture} files={item.files} />)}
                     <ContentLoader
                         speed={4}
