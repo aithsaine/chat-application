@@ -8,13 +8,15 @@ import axios from "axios"
 import Post from '../Components/Post'
 import ContentLoader from "react-content-loader";
 import toast from 'react-hot-toast';
-export default function Dashboard({ auth }: PageProps) {
+import SuggestItem from '@/Components/SuggestItem';
+export default function Dashboard({ auth, suggests }: PageProps) {
     const [page, setPage] = useState(1)
     const [posts, setPosts] = useState([])
     const [pers, setPers] = useState(0)
     const [postFile, setPostFile] = useState(null)
     const [title, setTitle] = useState("")
     const [user_id, setUserId] = useState(auth.user.id)
+    console.log("suggests = ", suggests)
 
 
     const getPosts = async () => {
@@ -125,7 +127,7 @@ export default function Dashboard({ auth }: PageProps) {
                     </div>
 
                 </div>
-                <div className="  p-2  flex flex-col items-start min-h-screen lg:w-1/2 sm:w-3/4   overflow-hidden sm:rounded-lg ">
+                <div className="  p-2  flex flex-col items-start min-h-screen md:w-1/2 sm:w-3/4   overflow-hidden sm:rounded-lg ">
                     <h1 className='p-2 mb-2 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
 
                     <div className=' w-full px-4 flex shadow-2xl flex-col items-center rounded-xl bg-white lg:w-3/4'>
@@ -142,10 +144,7 @@ export default function Dashboard({ auth }: PageProps) {
                         </form>
 
                     </div>
-                    <div>
 
-
-                    </div>
 
                     {posts && posts.map(item => <Post likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={auth.user.id} username={item.user_name} date={item.date} post_id={item.id}
                         filename={item.user_picture} files={item.files} />)}
@@ -179,8 +178,12 @@ export default function Dashboard({ auth }: PageProps) {
 
                 </div>
                 <div
-                    className=" md:block  hidden bg-sk-600 p-4 md:w-1/6  text-center bg-inherit fixed right-0  min-h-screen   overflow-hidden  sm:rounded-lg">
-                    You're logged in!
+                    className=" md:block  hidden bg-sk-600 p-4 md:w-2/6  text-center bg-inherit fixed right-0  min-h-screen   overflow-hidden  sm:rounded-lg">
+                    <fieldset className='border rounded-xl p-4 border-2 bg-white'>
+                        <legend><UserGroupIcon className='w-10 text-sky-600 inline-block ' /> <span className='font-bold'>Suggest Friends</span></legend>
+                        {suggests.map((elem: any) => <SuggestItem user={elem} />)}
+
+                    </fieldset>
 
                 </div>
             </div >

@@ -24,7 +24,8 @@ Route::get('/storage/picture/{filename}', function ($filename) {
 
 Route::get('/feed', function () {
     return Inertia::render('Dashboard', [
-        "posts" => \App\Http\Resources\PostResource::collection(\App\Models\Post::all())
+        "posts" => \App\Http\Resources\PostResource::collection(\App\Models\Post::all()),
+        "suggests" => App\Models\User::limit(5)->get()
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch("/profile/picture/update", [ProfileController::class, "uploadOnlyPicture"])->name("profile.updatePicture");
 });
 Route::controller(\App\Http\Controllers\PostController::class)->group(function () {
     Route::get("posts/index", "index")->name("post.index");

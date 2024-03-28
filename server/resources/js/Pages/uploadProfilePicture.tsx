@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Button } from "@mui/material";
+import { Link, useForm } from '@inertiajs/react';
+import axios from 'axios';
 
 function FileUpload({ auth }) {
-    const [selectedFile, setSelectedFile] = useState(null);
+
+
+
+    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
+        first_name: auth.user.first_name,
+        last_name: auth.user.last_name,
+        email: auth.user.email,
+        picture: null,
+        "_method": "patch"
+    });
+
+
+
+
+
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setSelectedFile(file);
+            setData("picture", file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 // Update the image preview
@@ -18,42 +35,41 @@ function FileUpload({ auth }) {
         }
     };
 
-    const uploadFile = () => {
-        if (selectedFile) {
-            // You can perform additional actions here, such as sending the file to the backend
-            console.log("Uploading file:", selectedFile.name);
-            console.log("File type:", selectedFile.type);
-            console.log("File size:", selectedFile.size);
-            console.log("File content:", selectedFile);
-        } else {
-            console.log("No file selected");
-        }
+    const uploadFile = async (e: any) => {
+        e.preventDefault();
+        post(route('profile.updatePicture',), {
+            forceFormData: true,
+        })
+    };
+
+    const skipUpload = () => {
+        // Implement skipping the upload
+        console.log("Skipping file upload");
     };
 
     return (
         <Authenticated user={auth.user} header={<></>}>
 
-            <div className='bg-sky-600 min-h-screen flex flex-col items-center'>
-                <div onClick={e => document.getElementById("fileInput").click()} className='h-1/2'>
-                    <input type={"file"} id={"fileInput"} className={"hidden"} onChange={handleFileChange} />
-                    <img id={"previewImage"} className="bg-sky-200 w-64 h-64 rounded-full absolute object-cover"
-                        src=""
-                        alt="" />
-                    <div
-                        className="w-64 h-64 group hover:bg-gray-200 opacity-60 rounded-full absolute flex justify-center items-center cursor-pointer transition duration-500">
-                        <img className="hidden group-hover:block w-12"
-                            src="https://www.svgrepo.com/show/33565/upload.svg" alt="" />
+            <div className="min-h-screen flex justify-center items-center bg-gray-100">
+
+                <div className=" p-8 rounded-md ">
+                    <div className="flex justify-center mb-8">
+                        <div className="relative rounded-full w-32 h-32">
+                            <input type="file" id="fileInput" className="hidden" onChange={handleFileChange} />
+                            <img id="previewImage" className="w-full h-full rounded-full object-cover" src="" alt="" />
+                            <div onClick={() => document.getElementById("fileInput").click()} className="absolute inset-0 flex justify-center rounded-full items-center border border-black bg-opacity-50 hover:bg-opacity-60 cursor-pointer">
+                                <img className="w-10 opacity-30" src="https://www.svgrepo.com/show/33565/upload.svg" alt="Upload" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-around mt-10 ">
+                        <Button variant="contained" color="primary" className='' onClick={uploadFile}>Continue</Button>
+                        <Link href='/feed'> <Button variant="outlined" color="primary" onClick={skipUpload} className="ml-6">Skip</Button></Link>
                     </div>
                 </div>
-
-
-
-                <Button variant="contained">Save</Button>
             </div>
 
-
         </Authenticated>
-
     );
 }
 

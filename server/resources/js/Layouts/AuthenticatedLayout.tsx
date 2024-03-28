@@ -14,9 +14,9 @@ export default function Authenticated({ user, path, header, children }: PropsWit
     return (
         <main className='relative w-full mb-0'>
 
-            {header??<Nav filename={user.picture} img={path}/>}
+            {header ?? <Nav filename={user.picture} img={path} />}
             <Toaster position="bottom-right" />
-            <main>{children}</main>
+            {children}
         </main >
     );
 }

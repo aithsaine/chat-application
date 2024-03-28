@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\Client\Request as ClientRequest;
 
 class ProfileController extends Controller
 {
@@ -73,5 +74,25 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function uploadOnlyPicture(Request $request)
+    {
+        $request->validate([
+            "picture" => "required|mimes:jpg,png,gif,jpeg,webp",
+        ]);
+        if ($request->user()->picture !== "profile.png") {
+
+            if (Storage::exists('profiles/' . $request->user()->picture)) {
+                Storage::delete('profiles/' . $request->user()->picture);
+            }
+        }
+        $newName = uniqid() . "." . $request->file("picture")->getClientOriginalExtension();
+        $savePict =   $request->file("picture")->storeAs("profiles", $newName);
+        if ($savePict) {
+            $request->user()->picture = $newName;
+        }
+        $request->user()->save();
+        return redirect("/feed");
     }
 }
