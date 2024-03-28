@@ -9,13 +9,12 @@ import Post from '../Components/Post'
 import ContentLoader from "react-content-loader";
 import toast from 'react-hot-toast';
 import SuggestItem from '@/Components/SuggestItem';
+import SharePost from '@/Components/SharePost';
 export default function Dashboard({ auth, suggests }: PageProps) {
     const [page, setPage] = useState(1)
     const [posts, setPosts] = useState([])
     const [pers, setPers] = useState(0)
-    const [postFile, setPostFile] = useState(null)
-    const [title, setTitle] = useState("")
-    const [user_id, setUserId] = useState(auth.user.id)
+
 
 
     const getPosts = async () => {
@@ -48,21 +47,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
         if (pers > 95)
             getPosts()
     }, [pers]);
-    const submit = async (e) => {
-        e.preventDefault();
-        const resp = await axios.post("post/store", { postFile, title, user_id }, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }
 
-        );
-        if (resp.data.status == "success") {
-            setTitle("")
-            toast.success(resp.data.message);
-            setPosts([resp.data.post, ...posts])
-        }
-    }
 
 
 
@@ -127,22 +112,9 @@ export default function Dashboard({ auth, suggests }: PageProps) {
 
                 </div>
                 <div className="  p-2  flex flex-col items-start min-h-screen md:w-1/2 sm:w-3/4   overflow-hidden sm:rounded-lg ">
-                    <h1 className='p-2 mb-2 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
+                    <h1 className='p-2 mb-2 mt-14 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
 
-                    <div className=' w-full px-4 flex shadow-2xl flex-col items-center rounded-xl bg-white lg:w-3/4'>
-                        <textarea name="" id="mytextarea" value={title} onChange={e => setTitle(e.target.value)} placeholder={`What's on your mind, ${auth.user.first_name.toUpperCase()}?`} className='w-full mt-2 rounded-xl bg-gray-100  text-md border-none  resize-none' rows="2"></textarea>
-                        <form onSubmit={submit} encType="multipart/form-data" className="w-full space-y-2">
-                            <input type="file" onChange={e => setPostFile(e.target.files[0]!)} name="Postfile" className='hidden' id="post-file" />
-                            <div className='flex w-full  items-center justify-between'>
-                                <button type='button' onClick={e => {
-                                    document.getElementById("post-file").click()
-                                }} className='text-md  font-bold  text-sky-600 p-4'>File <PaperClipIcon className='w-6 h-6 inline-block mx-1 ' />
-                                </button >
-                                <button type={"submit"} className='text-md  font-bold  text-sky-600 p-4'>Send<PaperAirplaneIcon className='w-6 h-6 inline-block mx-1 text-sky-600' /></button>
-                            </div>
-                        </form>
-
-                    </div>
+                    <SharePost user={auth.user!} posts={posts} setPosts={setPosts} />
 
 
                     {posts && posts.map(item => <Post likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={auth.user.id} username={item.user_name} date={item.date} post_id={item.id}
