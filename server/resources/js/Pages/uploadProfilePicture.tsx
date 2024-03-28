@@ -50,7 +50,7 @@ function FileUpload({ auth }) {
     return (
         <Authenticated user={auth.user} header={<></>}>
 
-            <div className="min-h-screen flex justify-center items-center bg-gray-100">
+            <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
 
                 <div className=" p-8 rounded-md ">
                     <div className="flex justify-center mb-8">
@@ -62,11 +62,16 @@ function FileUpload({ auth }) {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-around mt-10 ">
-                        <Button variant="contained" color="primary" className='' onClick={uploadFile}>Continue</Button>
-                        <Link href='/feed'> <Button variant="outlined" color="primary" onClick={skipUpload} className="ml-6">Skip</Button></Link>
-                    </div>
+                    <Button variant="contained" color="primary" className='mr-10 w-20 ' onClick={uploadFile}>save</Button>
+                    <Link href='/feed'> <Button variant="outlined" color="primary" className="ml-10 w-30">
+                        Skip</Button>
+                    </Link>
                 </div>
+                <ul>
+
+                    <li className='text-xs'>select your profile picture then click on save !!</li>
+                    <li className='text-xs'>Click Skip for Ignore !!</li>
+                </ul>
             </div>
 
         </Authenticated>

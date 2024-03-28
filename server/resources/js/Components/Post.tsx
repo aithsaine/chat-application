@@ -65,9 +65,9 @@ export default function Post({ username, title, files, date, filename, post_id, 
 
                         <span className={"text-sm"}>{lks}</span>
                         <label title={"like"} onClick={e => submitHandler(e, "like")} htmlFor={"like"}><HandThumbUpIcon
-                            className={`w-10 h-6 inline-block cursor-pointer ${reactType == 'like' ? "text-green-800" : "text-green-100"}`} /></label>
+                            className={`w-10 h-6 inline-block cursor-pointer transform transition duration-300 hover:scale-125 ${reactType == 'like' ? "text-green-800" : "text-green-100"}`} /></label>
                         <label title={"dislike"} onClick={e => submitHandler(e, "dislike")} htmlFor={"dislike"} ><HandThumbDownIcon
-                            className={`w-10 h-6 inline-block cursor-pointer ${reactType == "dislike" ? 'text-red-800' : "text-red-100"}`} /></label>
+                            className={`w-10 h-6 inline-block cursor-pointer transform transition duration-300 hover:scale-125 ${reactType == "dislike" ? 'text-red-800' : "text-red-100"}`} /></label>
                         <span className={"text-sm"}>{dsl}</span>
                     </div>
 
@@ -75,7 +75,7 @@ export default function Post({ username, title, files, date, filename, post_id, 
                         <button onClick={e => setLoad(true)} title={"comments"}><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>  {/*"comments button"*/}
                         {load && (
 
-                            <Comment isLoad={load} setLoad={setLoad} post_id={post_id} />
+                            <Comment isLoad={load} setLoad={setLoad} user_id={user_id} post_id={post_id} />
                         )}
                     </div>
 

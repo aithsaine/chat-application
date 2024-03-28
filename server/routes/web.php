@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\InAuthenticatedMiddleware;
 use Illuminate\Foundation\Application;
@@ -55,6 +56,9 @@ Route::controller(AccountController::class)->group(function () {
     Route::get("account/{user_id}/show", "show")->name("account.show");
 })->middleware(['auth']);
 
-
+Route::controller(CommentController::class)->group(function () {
+    Route::get("comments/{post_id}", "index");
+    Route::post("comment/store", "store")->name("comment.store");
+});
 
 require __DIR__ . '/auth.php';

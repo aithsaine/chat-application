@@ -117,7 +117,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
             <Head title="Dashboard" />
 
             <div className="mt-0 relative flex p-1">
-                <div className="hidden  min-h-screen  lg:block bg-inherit m-0  w-1/4    sm:rounded-lg">
+                <div className="hidden mt-20 min-h-screen  lg:block bg-inherit m-0  w-1/4    sm:rounded-lg">
                     <div className='fixed flex flex-col p-2 overflow-hidden '>
                         {items.map((item) => {
                             return <Link href={item.path} key={item.key} className='text-sm m-2 font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
@@ -178,8 +178,8 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                 </div>
 
                 <div
-                    className=" md:block   hidden bg-sk-600 p-4 md:w-2/6   text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
-                    <fieldset className='border rounded-xl p-4 items-center  border-2 bg-white '>
+                    className=" md:block   hidden bg-sk-600 p-4 md:w-1/2  lg:w-2/6 text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
+                    <fieldset className='border rounded-xl p-4 items-center w-full  border-2 bg-white '>
                         <legend><UserGroupIcon className='w-10 text-sky-600 inline-block ' /> <span className='font-bold'>Suggest Friends</span></legend>
                         {suggests.map((elem: any) => <SuggestItem user={elem} />)}
 
