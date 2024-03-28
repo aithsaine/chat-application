@@ -16,7 +16,6 @@ export default function Dashboard({ auth, suggests }: PageProps) {
     const [postFile, setPostFile] = useState(null)
     const [title, setTitle] = useState("")
     const [user_id, setUserId] = useState(auth.user.id)
-    console.log("suggests = ", suggests)
 
 
     const getPosts = async () => {
@@ -177,9 +176,10 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                     </ContentLoader>
 
                 </div>
+
                 <div
-                    className=" md:block  hidden bg-sk-600 p-4 md:w-2/6  text-center bg-inherit fixed right-0  min-h-screen   overflow-hidden  sm:rounded-lg">
-                    <fieldset className='border rounded-xl p-4 border-2 bg-white'>
+                    className=" md:block   hidden bg-sk-600 p-4 md:w-2/6   text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
+                    <fieldset className='border rounded-xl p-4 items-center  border-2 bg-white '>
                         <legend><UserGroupIcon className='w-10 text-sky-600 inline-block ' /> <span className='font-bold'>Suggest Friends</span></legend>
                         {suggests.map((elem: any) => <SuggestItem user={elem} />)}
 
