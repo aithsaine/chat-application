@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-export default function SuggestItem({ user }) {
+export default function SuggestItem({ user }: any) {
 
 
     const [image, setImage] = useState("")

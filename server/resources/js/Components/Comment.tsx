@@ -38,7 +38,7 @@ export default function Comment({ user_id, post_id, isLoad, setLoad }) {
                 </div>
                 <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                     <button onClick={e => setLoad(false)}><XCircleIcon className={"w-6"} /></button>
-                    <div style={{ maxHeight: "300px" }} className={"flex w-full   overflow-scroll"}>
+                    <div style={{ minHeight: "300px", maxHeight: "300px" }} className={"flex w-full   overflow-scroll"}>
                         <div className="w-full ">
                             <div className="flex px-4" >
 

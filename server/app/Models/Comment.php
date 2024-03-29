@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class Comment extends Model
 {
     use HasFactory;
-    protected $fillable = ["user_id","post_id","content"];
+    protected $fillable = ["user_id", "post_id", "content"];
 
     public function  user()
     {
@@ -22,10 +22,9 @@ class Comment extends Model
     public  static function validate(Request $request)
     {
         $request->validate([
-           "user_id"=>"required|exists:users,id",
-            "post_id"=>"required|exists:users,id",
-            "content"=>"required|max:200|min:1"
+            "user_id" => "required|exists:users,id",
+            "post_id" => "required|exists:posts,id",
+            "content" => "required|max:200|min:1"
         ]);
-
     }
 }

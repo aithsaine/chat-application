@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { EllipsisHorizontalIcon, ChatBubbleBottomCenterTextIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Comment from "@/Components/Comment";
 import { Link } from '@inertiajs/react';
+import VideoPlayer from "./VideoPlayer";
 
 export default function Post({ username, title, files, date, filename, post_id, user_id, likes, dislikes, reaction }) {
     const [lks, setLikes] = useState(likes)
@@ -17,7 +18,6 @@ export default function Post({ username, title, files, date, filename, post_id, 
             setLikes(resp.data.post.likes)
             setDislikes(resp.data.post.dislikes)
             setReactType(resp.data.post.reaction)
-
         }
 
     }
@@ -45,7 +45,10 @@ export default function Post({ username, title, files, date, filename, post_id, 
 
     }, [])
 
-
+    const videoExtensions = ["mp4", "mkv"]
+    const imageExtensions = ["jpg", "png", "webp"]
+    const fileExt = files[0].split(".").slice(-1)
+    console.log("ext ", fileExt)
     return (
         <>
 
@@ -58,7 +61,13 @@ export default function Post({ username, title, files, date, filename, post_id, 
                         className={"font-bold"}>{username.toUpperCase()}</span> <button className={"right-0 absolute "}><EllipsisHorizontalIcon className={"w-10 h-6 font-bold   inline-block cursor-pointer"} /></button></Link>
                 <span className={"text-sm  text-gray-500 ml-10"}>{(date)}</span>
                 <p className={"m-4"}>{title}</p>
-                {files[0] && <img className={` w-full border border-2 `} src={`http://localhost:8000/post/assets/${files[0]}`} />}
+                {files[0] &&
+                    videoExtensions.includes(fileExt[0]) ?
+
+                    < VideoPlayer file={`http://localhost:8000/post/assets/${files[0]}`} /> :
+                    <img className={` w-full border border-2 `} src={`http://localhost:8000/post/assets/${files[0]}`} />}
+
+
 
                 <div className={"m-4 flex items-center justify-between w-full"}>
                     <div>

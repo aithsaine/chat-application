@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ["title","user_id","hasAssets","created_at"];
+    protected $fillable = ["title", "user_id", "hasAssets", "created_at"];
 
     public function  user()
     {
@@ -18,14 +18,14 @@ class Post extends Model
     public  static function validation(Request $request)
     {
         $request->validate([
-            "title"=>"required|max:2000",
-            "user_id"=>"required|exists:users,id",
+            "title" => "required|max:2000",
+            "user_id" => "required|exists:users,id",
+            "picture" => "file|mimes:jpg,png,webp,mp4,mkv"
+
         ]);
     }
     public function reactions()
     {
         return $this->hasMany(Reaction::class);
-
     }
-
 }
