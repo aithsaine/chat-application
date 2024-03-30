@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Link } from "@inertiajs/react"
 
-export default function CommentItem({ filename, user_name, date, content }) {
+export default function CommentItem({ filename, user_name, user_id, date, content }) {
 
     const [avatar, setAvatar] = useState('')
     useEffect(() => {
@@ -21,14 +22,14 @@ export default function CommentItem({ filename, user_name, date, content }) {
 
     }, [])
     return (
-        <div className="flex items-start mb-4">
-            <img src={avatar} alt="Avatar" className="w-10 h-10 rounded-full mr-4 object-cover" />
-            <div>
-                <div className="flex items-center mb-1">
-                    <span className="font-semibold mr-2">{user_name}</span>
+        <div className="flex items-center mb-4">
+            <img src={avatar} alt="Avatar" className="w-8 h-8 rounded-full mr-2 object-cover" />
+            <div className=''>
+                <Link href={`account/${user_id}/show`} className="flex items-center ">
+                    <span className="font-semibold text-black text-sm mr-1">{user_name}</span>
                     <span className="text-gray-500 text-sm">{date}</span>
-                </div>
-                <p className="text-gray-800">{content}</p>
+                </Link>
+                <p className="text-gray-800 text-sm">{content}</p>
             </div>
         </div>)
 }

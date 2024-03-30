@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('follower_id')->references('id')->on('users')->onDelete('cascade');
             $table->unique(['user_id', 'follower_id']);
+            $table->string("status");
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\InAuthenticatedMiddleware;
 use Illuminate\Foundation\Application;
@@ -26,7 +27,7 @@ Route::get('/storage/picture/{filename}', function ($filename) {
 Route::get('/feed', function () {
     return Inertia::render('Dashboard', [
         "posts" => \App\Http\Resources\PostResource::collection(\App\Models\Post::all()),
-        "suggests" => App\Models\User::limit(5)->get()
+        "suggests" => App\Models\User::whereNot("id", Auth::user()->id)->limit(5)->get()
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -59,6 +60,10 @@ Route::controller(AccountController::class)->group(function () {
 Route::controller(CommentController::class)->group(function () {
     Route::get("comments/{post_id}", "index");
     Route::post("comment/store", "store")->name("comment.store");
+});
+
+Route::controller(FollowController::class)->group(function () {
+    Route::post("follow/store", "store")->name("follow.store");
 });
 
 require __DIR__ . '/auth.php';

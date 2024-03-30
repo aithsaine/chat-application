@@ -46,6 +46,7 @@ class CommentResource extends JsonResource
             "content" => $this->content,
             "date" => self::getDate($this->created_at),
             "user_name" => $this->user->first_name . " " . $this->user->last_name,
+            "user_id" => $this->user->id,
             "picture" => $this->user->picture,
         ];
     }
