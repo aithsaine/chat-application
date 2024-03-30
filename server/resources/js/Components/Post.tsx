@@ -7,10 +7,11 @@ import Comment from "@/Components/Comment";
 import { Link } from '@inertiajs/react';
 import VideoPlayer from "./VideoPlayer";
 
-export default function Post({ username, title, files, date, filename, post_id, user_id, likes, dislikes, reaction }) {
+export default function Post({ username, title, files, date, filename, post_id, user_id, likes, dislikes, reaction, commentsCount }) {
     const [lks, setLikes] = useState(likes)
     const [dsl, setDislikes] = useState(dislikes)
     const [reactType, setReactType] = useState(reaction)
+    const [commentsCnt, setCommentsCnt] = useState(commentsCount)
     const submitHandler = async (e, type) => {
         e.preventDefault()
         const resp = await axios.post("reaction/store", { type, user_id, post_id })
@@ -80,10 +81,10 @@ export default function Post({ username, title, files, date, filename, post_id, 
                     </div>
 
                     <div className={"me-6 t text-sky-600"}>
-                        <button onClick={e => setLoad(true)} title={"comments"}><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>  {/*"comments button"*/}
+                        <button className="flex space-x-2" onClick={e => setLoad(true)} title={"comments"}><span className="text-black">{commentsCnt}</span><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>  {/*"comments button"*/}
                         {load && (
 
-                            <Comment isLoad={load} setLoad={setLoad} user_id={user_id} post_id={post_id} />
+                            <Comment isLoad={load} setLoad={setLoad} commentsCnt={commentsCnt} setCommentsCnt={setCommentsCnt} user_id={user_id} post_id={post_id} />
                         )}
                     </div>
 

@@ -26,6 +26,7 @@ class UserResource extends JsonResource
             "picture" => $this->picture,
             "followers" => count($this->followers),
             "following" => count($this->following),
+            "posts" => count($this->posts),
             "status" => Follower::where("user_id", Auth::user()->id)->where("follower_id", $this->id)->first()?->status
         ];
     }

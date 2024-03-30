@@ -3,7 +3,7 @@ import { PaperAirplaneIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import InputEmoji from "react-input-emoji";
 import CommentItem from "./CommentItem";
-export default function Comment({ user_id, post_id, isLoad, setLoad }) {
+export default function Comment({ user_id, post_id, isLoad, setLoad, commentsCnt, setCommentsCnt }) {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("")
 
@@ -27,6 +27,7 @@ export default function Comment({ user_id, post_id, isLoad, setLoad }) {
         })
         if (resp.data.status === "success") {
             setComments([resp.data.comment, ...comments])
+            setCommentsCnt(commentsCnt + 1)
             setNewComment("")
         }
     }

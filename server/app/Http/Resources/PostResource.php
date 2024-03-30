@@ -60,6 +60,7 @@ class PostResource extends JsonResource
             "id" => $this->id,
             "title" => $this->title,
             "files" => $files,
+            "commentsCount" => count($this->comments),
             "likes" => count(Reaction::where("post_id", $this->id)->where("type", "like")->get()),
             "dislikes" => count(Reaction::where("post_id", $this->id)->where("type", "dislike")->get()),
             "date" => self::getDate($this->created_at),
