@@ -7,13 +7,14 @@ import { useEffect, useState } from 'react';
 import axios from "axios"
 import Post from '../Components/Post'
 import ContentLoader from "react-content-loader";
-import toast from 'react-hot-toast';
 import SuggestItem from '@/Components/SuggestItem';
 import SharePost from '@/Components/SharePost';
 export default function Dashboard({ auth, suggests }: PageProps) {
     const [page, setPage] = useState(1)
     const [posts, setPosts] = useState([])
     const [pers, setPers] = useState(0)
+    const [suggestions, setSuggestions] = useState(suggests.data)
+    console.log(suggestions)
 
 
 
@@ -57,7 +58,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
         {
             key: 1,
             title: "profile",
-            path: "/",
+            path: `user/${auth.user.id}`,
             icon: UserIcon
 
         },
@@ -153,7 +154,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                     className=" md:block   hidden bg-sk-600 p-4 md:w-1/3  lg:w-1/4 text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
                     <fieldset className='border rounded-xl p-4 items-center w-full  border-2 bg-white '>
                         <legend><UserGroupIcon className='w-10 text-sky-600 inline-block ' /> <span className='font-bold'>Suggest Friends</span></legend>
-                        {suggests.map((elem: any) => <SuggestItem user={elem} />)}
+                        {suggestions.map((elem: any) => <SuggestItem user={elem} />)}
 
                     </fieldset>
 

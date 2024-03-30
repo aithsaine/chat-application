@@ -48,7 +48,6 @@ export default function Post({ username, title, files, date, filename, post_id, 
     const videoExtensions = ["mp4", "mkv"]
     const imageExtensions = ["jpg", "png", "webp"]
     const fileExt = files[0].split(".").slice(-1)
-    console.log("ext ", fileExt)
     return (
         <>
 

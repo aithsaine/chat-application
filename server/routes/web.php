@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\InAuthenticatedMiddleware;
+use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +26,10 @@ Route::get('/storage/picture/{filename}', function ($filename) {
 })->middleware("auth")->name("picture.get");
 
 Route::get('/feed', function () {
+    $suggestItems =
+        UserResource::collection(App\Models\User::whereNot("id", Auth::user()->id)->limit(5)->get()) ?? [];
     return Inertia::render('Dashboard', [
-        "posts" => \App\Http\Resources\PostResource::collection(\App\Models\Post::all()),
-        "suggests" => App\Models\User::whereNot("id", Auth::user()->id)->limit(5)->get()
+        "suggests" => $suggestItems
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -54,7 +56,7 @@ Route::get("feed/upload/file", function () {
 
 
 Route::controller(AccountController::class)->group(function () {
-    Route::get("account/{user_id}/show", "show")->name("account.show");
+    Route::get("user/{user_id}", "show")->name("account.show");
 })->middleware(['auth']);
 
 Route::controller(CommentController::class)->group(function () {
@@ -64,6 +66,7 @@ Route::controller(CommentController::class)->group(function () {
 
 Route::controller(FollowController::class)->group(function () {
     Route::post("follow/store", "store")->name("follow.store");
+    Route::delete("follow/{user_id}/delete", "delete")->name("follow.delete");
 });
 
 require __DIR__ . '/auth.php';
