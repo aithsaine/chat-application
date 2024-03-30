@@ -26,8 +26,9 @@ export default function SuggestItem({ user }: any) {
 
     return (
         <div className='flex items-center justify-between '>
-            <Link href={`account/${user.id}/show`} key={user.id} className='text-sm m-2 font-bold'>{<img src={image} className='w-10 h-10 rounded-full object-cover inline-block mx-2 text-sky-600' />}{user.first_name.toLocaleUpperCase()} {user.last_name.toLocaleUpperCase()}</Link >
-            <UserPlusIcon className='w-6 h-6 mx-2' />
+            <Link href={`account/${user.id}/show`} key={user.id} className='text-xs my-2  font-bold'>{<img src={image} className='w-8 h-8 rounded-full object-cover inline-block mx-2 text-sky-600' />}{user.first_name.toLocaleUpperCase()} {user.last_name.toLocaleUpperCase()}</Link >
+            <button> <UserPlusIcon className='w-6 h-6 mx-2 text-sky-600' />
+            </button>
         </div>
     )
 }

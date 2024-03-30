@@ -102,7 +102,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
             <Head title="Dashboard" />
 
             <div className="mt-0 relative flex p-1">
-                <div className="hidden mt-20 min-h-screen  lg:block bg-inherit m-0  w-1/4    sm:rounded-lg">
+                <div className="hidden mt-20 min-h-screen  lg:block bg-inherit m-0  w-1/4 me-6  sm:rounded-lg">
                     <div className='fixed flex flex-col p-2 overflow-hidden '>
                         {items.map((item) => {
                             return <Link href={item.path} key={item.key} className='text-sm m-2 font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
@@ -111,7 +111,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                     </div>
 
                 </div>
-                <div className="  p-2  flex flex-col items-start min-h-screen md:w-1/2 sm:w-3/4   overflow-hidden sm:rounded-lg ">
+                <div className="  p-2  flex flex-col items-start min-h-screen md:w-2/3 lg:w-3/6   overflow-hidden sm:rounded-lg ">
                     <h1 className='p-2 mb-2 mt-14 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
 
                     <SharePost user={auth.user!} posts={posts} setPosts={setPosts} />
@@ -150,7 +150,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                 </div>
 
                 <div
-                    className=" md:block   hidden bg-sk-600 p-4 md:w-1/2  lg:w-2/6 text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
+                    className=" md:block   hidden bg-sk-600 p-4 md:w-1/3  lg:w-1/4 text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
                     <fieldset className='border rounded-xl p-4 items-center w-full  border-2 bg-white '>
                         <legend><UserGroupIcon className='w-10 text-sky-600 inline-block ' /> <span className='font-bold'>Suggest Friends</span></legend>
                         {suggests.map((elem: any) => <SuggestItem user={elem} />)}
