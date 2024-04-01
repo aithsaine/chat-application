@@ -56,8 +56,8 @@ Route::get("feed/upload/file", function () {
 
 
 Route::controller(AccountController::class)->group(function () {
-    Route::get("user/{user_id}", "show")->name("account.show");
-})->middleware(['auth']);
+    Route::get("user/{user_id}", "show")->name("account.show")->middleware(['auth']);
+});
 
 Route::controller(CommentController::class)->group(function () {
     Route::get("comments/{post_id}", "index");

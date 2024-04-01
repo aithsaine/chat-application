@@ -7,14 +7,14 @@ import Comment from "@/Components/Comment";
 import { Link } from '@inertiajs/react';
 import VideoPlayer from "./VideoPlayer";
 
-export default function Post({ username, title, files, date, filename, post_id, user_id, likes, dislikes, reaction, commentsCount }) {
+export default function Post({ username, title, files, date, filename, post_id, user_id, likes, dislikes, reaction, commentsCount, auth }) {
     const [lks, setLikes] = useState(likes)
     const [dsl, setDislikes] = useState(dislikes)
     const [reactType, setReactType] = useState(reaction)
     const [commentsCnt, setCommentsCnt] = useState(commentsCount)
     const submitHandler = async (e, type) => {
         e.preventDefault()
-        const resp = await axios.post("reaction/store", { type, user_id, post_id })
+        const resp = await axios.post("reaction/store", { type, user_id: auth.user.id, post_id })
         if (resp.data.status == "success") {
             setLikes(resp.data.post.likes)
             setDislikes(resp.data.post.dislikes)
@@ -23,7 +23,6 @@ export default function Post({ username, title, files, date, filename, post_id, 
 
     }
     const [load, setLoad] = useState(false)
-
 
 
 
@@ -42,30 +41,32 @@ export default function Post({ username, title, files, date, filename, post_id, 
             }
 
         }
-        getPict();
+        filename && getPict();
 
     }, [])
 
     const videoExtensions = ["mp4", "mkv"]
     const imageExtensions = ["jpg", "png", "webp"]
-    const fileExt = files[0].split(".").slice(-1)
+    const fileExt = files[0] && files[0].split(".").slice(-1)
+
     return (
         <>
 
             <div style={{ minHeight: "20px" }}
                 className=' w-full my-4 relative flex shadow-xl flex-col items-start mt-4 rounded-xl bg-white lg:w-3/4'>
-                <Link href={`account/${user_id}/show`} className={"mt-4"}>
+                <Link href={`user/${user_id}`} className={"mt-4"}>
                     <img src={image} className={'w-10 h-10 rounded-full inline-block mx-2 overflow-hidden object-cover'} />
 
                     <span
                         className={"font-bold"}>{username.toUpperCase()}</span> <button className={"right-0 absolute "}><EllipsisHorizontalIcon className={"w-10 h-6 font-bold   inline-block cursor-pointer"} /></button></Link>
                 <span className={"text-sm  text-gray-500 ml-10"}>{(date)}</span>
                 <p className={"m-4"}>{title}</p>
-                {files[0] &&
-                    videoExtensions.includes(fileExt[0]) ?
+                {
+                    fileExt && videoExtensions.includes(fileExt[0]) ?
 
-                    < VideoPlayer file={`http://localhost:8000/post/assets/${files[0]}`} /> :
-                    <img className={` w-full border border-2 `} src={`http://localhost:8000/post/assets/${files[0]}`} />}
+                        < VideoPlayer file={`http://localhost:8000/post/assets/${files[0]}`} /> :
+                        fileExt && imageExtensions.includes(fileExt[0]) ?
+                            < img className={` w-full border border-2 `} src={`http://localhost:8000/post/assets/${files[0]}`} /> : <></>}
 
 
 
@@ -84,7 +85,7 @@ export default function Post({ username, title, files, date, filename, post_id, 
                         <button className="flex space-x-2" onClick={e => setLoad(true)} title={"comments"}><span className="text-black">{commentsCnt}</span><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>  {/*"comments button"*/}
                         {load && (
 
-                            <Comment isLoad={load} setLoad={setLoad} commentsCnt={commentsCnt} setCommentsCnt={setCommentsCnt} user_id={user_id} post_id={post_id} />
+                            <Comment isLoad={load} setLoad={setLoad} commentsCnt={commentsCnt} setCommentsCnt={setCommentsCnt} user_id={auth.user.id} post_id={post_id} />
                         )}
                     </div>
 

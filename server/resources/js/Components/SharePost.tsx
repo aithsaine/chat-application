@@ -29,7 +29,7 @@ export default function SharePost({ user, posts, setPosts }) {
         }
     }
     return (
-        <div className=' w-full px-4 flex shadow-2xl flex-col items-center rounded-xl bg-white lg:w-3/4'>
+        <div className=' w-full px-4 flex border border-2 shadow-2xl flex-col items-center rounded-xl bg-white lg:w-3/4'>
             {uploadProgress > 0 && (
                 <div className="relative w-full pt-1">
                     <div className="flex mb-2 items-center justify-between">
