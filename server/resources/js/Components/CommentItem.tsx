@@ -22,14 +22,14 @@ export default function CommentItem({ filename, user_name, user_id, date, conten
 
     }, [])
     return (
-        <div className="flex items-center mb-4">
+        <div className="flex text-white items-center mb-4">
             <img src={avatar} alt="Avatar" className="w-8 h-8 rounded-full mr-2 object-cover" />
             <div className=''>
                 <Link href={`account/${user_id}/show`} className="flex items-center ">
-                    <span className="font-semibold text-black text-sm mr-1">{user_name}</span>
-                    <span className="text-gray-500 text-sm">{date}</span>
+                    <span className="font-semibold text-black dark:text-white text-sm mr-1">{user_name}</span>
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">{date}</span>
                 </Link>
-                <p className="text-gray-800 text-sm">{content}</p>
+                <p className="text-gray-800 dark:text-white text-sm">{content}</p>
             </div>
         </div>)
 }

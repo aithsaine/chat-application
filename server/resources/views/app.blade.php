@@ -29,7 +29,7 @@
 
 </head>
 
-<body class="font-sans antialiased bg-stone-100	">
+<body class="font-sans antialiased dark:bg-black	">
     @inertia
 </body>
 

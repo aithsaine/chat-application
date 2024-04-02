@@ -4,8 +4,9 @@ import { faEnvelope, faUserFriends, faBell, faUser } from '@fortawesome/free-sol
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { Link } from '@inertiajs/react';
+import SearchInput from './SearchInput';
 
-export default function Nav({ filename }) {
+export default function Nav({ filename, className }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [image, setImage] = useState("")
@@ -45,11 +46,11 @@ export default function Nav({ filename }) {
 
     return (
         <>
-            <nav className="border-bottom border-black bg-white px-6 shadow-2xl py-2 fixed w-full z-50">
+            <nav className={`border-bottom border-black dark:bg-black bg-white px-6 shadow-lg dark:shadow-sky-800 py-2 fixed w-full z-50 ${className}`}>
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                         <img className="h-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="" />
-                        <input className="rounded-full h-6 bg-gray-200 p-4 text-xs text-gray-400 outline-none" type="text" placeholder="Find Accoun,Post.." />
+                        <SearchInput />
                     </div>
                     <div className="relative flex justify-between w-1/5 items-center">
                         <div className="relative group">

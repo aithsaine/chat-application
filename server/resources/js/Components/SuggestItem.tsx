@@ -38,16 +38,21 @@ export default function SuggestItem({ user }: any) {
     }
 
     return (
-        <div className='flex items-center justify-between '>
-            <Link style={{ fontSize: "0.7rem" }} href={`user/${user.id}`} key={user.id} className=' my-2  font-bold'>{<img src={image} className='w-8 h-8 rounded-full object-cover inline-block  text-sky-600' />}{user.first_name.toLocaleUpperCase()} {user.last_name.toLocaleUpperCase()}</Link >
+        <div className="p-3 flex items-center  justify-between  cursor-pointer ">
+            <Link href="" className="flex items-center">
+                <img className="rounded-full object-cover h-10 w-10" src={image} />
+                <div className="ml-2 flex flex-col items-start">
+                    <div className="leading-snug text-sm dark:text-white font-bold">{user.first_name} {user.last_name}</div>
+                    <div className="leading-snug text-xs dark:text-gray-400 ">Web Developer</div>
+                </div>
+            </Link>
             {followStatus == "followed" ? <button
                 onClick={Unfollowe}
-                className=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-xs py-1 px-4  text-center "  >Fllowing</button>
+                className="h-8 px-3 text-md font-bold text-blue-400 border border-blue-400 rounded-full hover:bg-blue-100"            >Fllowing</button>
                 : <button
                     onClick={following}
-                    className=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-xs py-1 px-4  text-center "  >Fllow</button>
+                    className="h-8 px-3 text-md font-bold text-blue-400 border border-blue-400 rounded-full hover:bg-blue-100"                >Fllow</button>
             }
-
         </div>
     )
 }

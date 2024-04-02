@@ -35,7 +35,7 @@ export default function Welcome({ auth }: PageProps<{ laravelVersion: string, ph
                 </div>
                 <div className="md:w-1/2 m-4">
                     <div className="text-5xl  font-primary text-center bg-gradient-to-l from-orange-500 to-yellow-500 text-transparent bg-clip-text font-bold mt-6"><span className="">Share</span> & Chat</div>
-                    <p className="text-2xl mt-6 mx-4 tracking-wide font-primary leading-loose">
+                    <p className="text-2xl mt-6 mx-4 tracking-wide font-primary dark:text-white leading-loose">
                         Hello welcom to Chat Plateform Here You Can Share Your Idia, day, Experience, Fun ... .<br />with Your Friends
                         <span style={{ marginLeft: '10px' }}>
                             <Link href={"/login"}>

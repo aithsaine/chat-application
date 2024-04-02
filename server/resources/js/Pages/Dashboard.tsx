@@ -106,7 +106,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                 <div className="hidden mt-20 min-h-screen  lg:block bg-inherit m-0  w-1/4 me-6  sm:rounded-lg">
                     <div className='fixed flex flex-col p-2 overflow-hidden '>
                         {items.map((item) => {
-                            return <Link href={item.path} key={item.key} className='text-sm m-2 font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
+                            return <Link href={item.path} key={item.key} className='text-sm m-2 dark:text-white font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
 
                         })}
                     </div>
@@ -152,7 +152,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
 
                 <div
                     className=" md:block   hidden bg-sk-600 p-4 md:w-1/3  lg:w-1/4 text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
-                    <fieldset className='border rounded-xl p-4 items-center w-full  border-2 bg-white '>
+                    <fieldset className='border rounded-xl p-4 items-center w-full  border-2 dark:bg-black dark:text-white '>
                         <legend><UserGroupIcon className='w-10 text-sky-600 inline-block ' /> <span className='font-bold'>Suggest Friends</span></legend>
                         {suggestions.map((elem: any) => <SuggestItem user={elem} />)}
 

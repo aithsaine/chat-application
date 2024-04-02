@@ -53,13 +53,16 @@ export default function Post({ username, title, files, date, filename, post_id, 
         <>
 
             <div style={{ minHeight: "20px" }}
-                className=' w-full my-4 relative flex shadow-xl flex-col items-start mt-4 rounded-xl bg-white lg:w-3/4'>
-                <Link href={`user/${user_id}`} className={"mt-4"}>
-                    <img src={image} className={'w-10 h-10 rounded-full inline-block mx-2 overflow-hidden object-cover'} />
+                className={`w-full my-4 relative flex shadow-xl flex-col items-start mt-4 rounded-xl dark:bg-black dark:text-white lg:w-3/4`}>
+                <Link href={`user/${user_id}`} className="flex items-center">
+                    <img className="rounded-full object-cover h-10 w-10" src={image} />
+                    <div className="ml-2 flex flex-col items-start">
+                        <div className="leading-snug text-sm dark:text-white font-bold">{username.toUpperCase()}</div>
+                        <div className="leading-snug text-xs dark:text-gray-400 ">{date}</div>
+                    </div>
+                </Link>
 
-                    <span
-                        className={"font-bold"}>{username.toUpperCase()}</span> <button className={"right-0 absolute "}><EllipsisHorizontalIcon className={"w-10 h-6 font-bold   inline-block cursor-pointer"} /></button></Link>
-                <span className={"text-sm  text-gray-500 ml-10"}>{(date)}</span>
+                <button className={"right-0 absolute "}><EllipsisHorizontalIcon className={"w-10 h-6 font-bold   inline-block cursor-pointer"} /></button>
                 <p className={"m-4"}>{title}</p>
                 {
                     fileExt && videoExtensions.includes(fileExt[0]) ?
@@ -82,10 +85,10 @@ export default function Post({ username, title, files, date, filename, post_id, 
                     </div>
 
                     <div className={"me-6 t text-sky-600"}>
-                        <button className="flex space-x-2" onClick={e => setLoad(true)} title={"comments"}><span className="text-black">{commentsCnt}</span><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>  {/*"comments button"*/}
+                        <button className="flex space-x-2" onClick={e => setLoad(true)} title={"comments"}><span className="text-black dark:text-white">{commentsCnt}</span><ChatBubbleBottomCenterTextIcon className={"bg-sk w-6"} /></button>  {/*"comments button"*/}
                         {load && (
 
-                            <Comment isLoad={load} setLoad={setLoad} commentsCnt={commentsCnt} setCommentsCnt={setCommentsCnt} user_id={auth.user.id} post_id={post_id} />
+                            <Comment setLoad={setLoad} commentsCnt={commentsCnt} setCommentsCnt={setCommentsCnt} user_id={auth.user.id} post_id={post_id} />
                         )}
                     </div>
 
