@@ -42,8 +42,7 @@ export default function AccountLayout({ auth, user, children }) {
         }
     }
     return (
-
-        <div className="dark:!bg-navy-800 shadow-shadow-500 shadow-3xl rounded-primary   flex  w-full   bg-white bg-cover dark:shadow-none">
+        <>
             <Nav filename={auth.user.picture} />
 
             {/* <div className="relative mt-20 flex h-32 w-full justify-center rounded-xl bg-cover" style={{ backgroundImage: 'url("https://i.ibb.co/FWggPq1/banner.png")' }}>
@@ -90,31 +89,57 @@ export default function AccountLayout({ auth, user, children }) {
                 }
 
             </div> */}
-            <div className="p-16 bg-black text-white">
+            <div className="p-16 dark:bg-black dark:text-white">
                 <div className="p-8  shadow mt-24">
                     <div className="grid grid-cols-1 md:grid-cols-3">
                         <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">      <div>
-                            <p className="font-bold text-gray-700 text-xl">22</p>
-                            <p className="text-gray-400">Friends</p>
+                            <p className="font-bold text-gray-700 text-xl">{Followers}</p>
+                            <p className="text-gray-400">Follwers</p>
                         </div>      <div>
-                                <p className="font-bold text-gray-700 text-xl">10</p>
-                                <p className="text-gray-400">Photos</p>
+                                <p className="font-bold text-gray-700 text-xl">{User.posts}</p>
+                                <p className="text-gray-400">Posts</p>
                             </div>
                             <div>
-                                <p className="font-bold text-gray-700 text-xl">89</p>
-                                <p className="text-gray-400">Comments</p>
-                            </div>    </div>    <div className="relative">      <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24" viewBox="0 0 20 20" fill="currentColor">  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                                <p className="font-bold text-gray-700 text-xl">{Following}</p>
+                                <p className="text-gray-400">Following</p>
                             </div>    </div>
+                        <div className="relative flex items-center justify-center">
+                            <div className="w-20 h-20 bg-indigo-100 mx-auto  rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+                                <img src={image} className='w-full h-full rounded-full object-cover' alt="" />
+
+                            </div>
+                            <h1 className='text-2xl'>{user.first_name.toUpperCase()} {user.last_name.toUpperCase()}</h1>
+
+                        </div>
                         <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-                            <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">  Connect</button>
-                            <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">  Message</button>    </div>  </div>
-                    <div className="mt-20 text-center border-b pb-12">
-                    </div>
+                            {auth.user.id != User.id && (
+                                followStatus == "followed" ? <button
+                                    onClick={Unfollowe}
+                                    className="h-8 px-3 text-md font-bold text-blue-400 border border-blue-400 rounded-full hover:bg-blue-100"    >Fllowing</button>
+                                    : <button
+                                        onClick={following}
+                                        className="h-8 px-3 text-md font-bold text-blue-400 border border-blue-400 rounded-full hover:bg-blue-100"    >Fllow</button>
+                            )
+
+
+                            }
+                            {auth.user.id != User.id &&
+
+                                < button
+                                    className="h-8 px-3 text-md font-bold text-blue-400 border border-blue-400 rounded-full hover:bg-blue-100"  >Message</button>
+                            }
+                        </div>  </div>
+
                 </div>
+            </div>
+            <section className='flex w-full'>
+                <div className='w-1/4 mx-2 min-h-screen border-4 rounded-xl'>
+                </div>
+                <div className='w-2/3 space-y-10 min-h-screen ms-6'>
+                    {children}
+                </div>
+            </section>
+        </>
 
-                {children}
-            </div >
-
-            )
+    )
 }

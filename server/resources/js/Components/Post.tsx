@@ -14,7 +14,7 @@ export default function Post({ username, title, files, date, filename, post_id, 
     const [commentsCnt, setCommentsCnt] = useState(commentsCount)
     const submitHandler = async (e, type) => {
         e.preventDefault()
-        const resp = await axios.post("reaction/store", { type, user_id: auth.user.id, post_id })
+        const resp = await axios.post("/reaction/store", { type, user_id: auth.user.id, post_id })
         if (resp.data.status == "success") {
             setLikes(resp.data.post.likes)
             setDislikes(resp.data.post.dislikes)
@@ -54,7 +54,7 @@ export default function Post({ username, title, files, date, filename, post_id, 
 
             <div style={{ minHeight: "20px" }}
                 className={`w-full my-4 relative flex shadow-xl flex-col items-start mt-4 rounded-xl dark:bg-black dark:text-white lg:w-3/4`}>
-                <Link href={`user/${user_id}`} className="flex items-center">
+                <Link href={`/user/${user_id}`} className="flex items-center">
                     <img className="rounded-full object-cover h-10 w-10" src={image} />
                     <div className="ml-2 flex flex-col items-start">
                         <div className="leading-snug text-sm dark:text-white font-bold">{username.toUpperCase()}</div>

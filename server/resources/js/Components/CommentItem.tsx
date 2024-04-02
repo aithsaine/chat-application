@@ -25,7 +25,7 @@ export default function CommentItem({ filename, user_name, user_id, date, conten
         <div className="flex text-white items-center mb-4">
             <img src={avatar} alt="Avatar" className="w-8 h-8 rounded-full mr-2 object-cover" />
             <div className=''>
-                <Link href={`account/${user_id}/show`} className="flex items-center ">
+                <Link href={`/user/${user_id}`} className="flex items-center ">
                     <span className="font-semibold text-black dark:text-white text-sm mr-1">{user_name}</span>
                     <span className="text-gray-500 dark:text-gray-400 text-sm">{date}</span>
                 </Link>

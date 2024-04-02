@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.overflow-y-auto::-webkit-scrollbar {
+    display: none!important;
+}
+
+/* Hide scrollbar for IE, Edge, Firefox */
+.overflow-y-auto {
+    -ms-overflow-style: none!important;  /* IE and Edge */
+    scrollbar-width: none!important;  /* Firefox */
+    
+
+}

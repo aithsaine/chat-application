@@ -38,11 +38,11 @@ export default function SuggestItem({ user }: any) {
     }
 
     return (
-        <div className="p-3 flex items-center  justify-between  cursor-pointer ">
-            <Link href="" className="flex items-center">
+        <div className="py-2 flex items-center  justify-between  cursor-pointer ">
+            <Link href={`user/${user.id}`} className="flex items-start">
                 <img className="rounded-full object-cover h-10 w-10" src={image} />
                 <div className="ml-2 flex flex-col items-start">
-                    <div className="leading-snug text-sm dark:text-white font-bold">{user.first_name} {user.last_name}</div>
+                    <div className="leading-snug text-xs flex items-start flex-col dark:text-white font-bold"><span>{user.first_name.toUpperCase()}</span> <span>{user.last_name.toUpperCase()}</span></div>
                     <div className="leading-snug text-xs dark:text-gray-400 ">Web Developer</div>
                 </div>
             </Link>
