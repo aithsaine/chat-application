@@ -26,6 +26,10 @@ export default function AccountLayout({ auth, user, children }) {
         }
         getPict();
 
+        if (!localStorage.getItem("light_mode"))
+            window.localStorage.setItem("light_mode", "light")
+
+
     }, [])
     const following = async () => {
         const response = await axios.post("/follow/store", { user_id: User.id })
@@ -89,8 +93,8 @@ export default function AccountLayout({ auth, user, children }) {
                 }
 
             </div> */}
-            <div className="p-16 dark:bg-black dark:text-white">
-                <div className="p-8  shadow mt-24">
+            {/* <div className="p-16 dark:bg-black dark:text-white">
+                <div className="  shadow mt-24">
                     <div className="grid grid-cols-1 md:grid-cols-3">
                         <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">      <div>
                             <p className="font-bold text-gray-700 text-xl">{Followers}</p>
@@ -102,14 +106,15 @@ export default function AccountLayout({ auth, user, children }) {
                             <div>
                                 <p className="font-bold text-gray-700 text-xl">{Following}</p>
                                 <p className="text-gray-400">Following</p>
-                            </div>    </div>
+                            </div>
+                        </div>
                         <div className="relative flex items-center justify-center">
                             <div className="w-20 h-20 bg-indigo-100 mx-auto  rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
                                 <img src={image} className='w-full h-full rounded-full object-cover' alt="" />
 
                             </div>
                             <h1 className='text-2xl'>{user.first_name.toUpperCase()} {user.last_name.toUpperCase()}</h1>
-
+                            p
                         </div>
                         <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
                             {auth.user.id != User.id && (
@@ -131,10 +136,63 @@ export default function AccountLayout({ auth, user, children }) {
                         </div>  </div>
 
                 </div>
-            </div>
-            <section className='flex w-full'>
-                <div className='w-1/4 mx-2 min-h-screen border-4 rounded-xl'>
+            </div> */}
+
+            <div className="bg-white shadow-md rounded-lg py-16 overflow-hidden">
+                {/* Header */}
+                <div className="bg-blue-600 px-4 py-2 text-center">
+                    {/* User Avatar */}
+                    <img className="w-32 h-32 rounded-full object-cover mx-auto mb-4" src={image} alt="User Avatar" />
+                    {/* User Name */}
+                    <h2 className="text-xl font-semibold text-white">{user.first_name} {user.last_name}</h2>
+                    {/* Job Title */}
+                    <p className="text-sm text-gray-200">Software Engineer</p>
                 </div>
+                {/* Body */}
+                <div className="p-4 text-center">
+                    {/* Description */}
+                    <p className="text-gray-700 mb-4">Passionate about building innovative software solutions.</p>
+                    {/* Follower Count */}
+                    <div className="flex justify-center mb-4">
+                        <div className="flex flex-col  justify-center mr-6">
+                            <span className="text-gray-600">Followers</span>
+                            <span className="text-gray-800 font-semibold">{Followers}</span>
+                        </div>
+                        <div className="mr-6 flex flex-col  justify-center">
+                            <span className="text-gray-600">Following</span>
+                            <span className="text-gray-800 font-semibold">{Following}</span>
+                        </div>
+                        <div className='flex flex-col  justify-center'>
+                            <span className="text-gray-600">Posts</span>
+                            <span className="text-gray-800 font-semibold">{User.posts}</span>
+                        </div>
+                    </div>
+                    {/* Buttons */}
+                    <div className="flex space-x-4 justify-center">
+                        {/* Follow Button */}
+                        {auth.user.id != User.id && (
+                            followStatus == "followed" ? <button
+                                onClick={Unfollowe}
+                                className=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-xs py-1 px-4  text-center "  >Fllowing</button>
+                                : <button
+                                    onClick={following}
+                                    className=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-xs py-1 px-4  text-center "  >Fllow</button>
+                        )
+
+
+                        }
+                        {auth.user.id != User.id &&
+
+                            < button
+                                className=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-xs py-1 px-4  text-center "   >Message</button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <section className=' flex w-full'>
+                <aside className='sticky top-0 w-1/4 mx-2  border-4 rounded-xl'>
+                </aside>
                 <div className='w-2/3 space-y-10 min-h-screen ms-6'>
                     {children}
                 </div>

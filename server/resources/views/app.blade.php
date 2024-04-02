@@ -21,6 +21,7 @@
             font-style: normal;
         }
     </style>
+
     <!-- Scripts -->
     @routes
     @viteReactRefresh

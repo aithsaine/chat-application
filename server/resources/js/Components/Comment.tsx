@@ -53,7 +53,7 @@ export default function Comment({ user_id, post_id, setLoad, commentsCnt, setCom
                                 <PaperAirplaneIcon onClick={saveComment} className="w-6 cursor-pointer " title="Save comment" />
                             </div >
                             <div className="flex flex-col p-2">
-                                {comments.map(comment => <CommentItem filename={comment.picture} user_name={comment.user_name} user_id={comment.user_id} date={comment.date} content={comment.content} />)}
+                                {comments && comments.map(comment => <CommentItem filename={comment.picture} user_name={comment.user_name} user_id={comment.user_id} date={comment.date} content={comment.content} />)}
                             </div>
                         </div>
                     </div>

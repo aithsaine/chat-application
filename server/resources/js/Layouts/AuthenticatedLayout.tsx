@@ -1,4 +1,4 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import { useState, PropsWithChildren, ReactNode, useEffect } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -10,7 +10,11 @@ import { Toaster } from 'react-hot-toast';
 
 export default function Authenticated({ user, path, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    useEffect(() => {
+        if (!localStorage.getItem("light_mode"))
+            window.localStorage.setItem("light_mode", "dark")
 
+    }, [])
     return (
         <main className='relative w-full mb-0'>
 
