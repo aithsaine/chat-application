@@ -14,7 +14,6 @@ export default function Dashboard({ auth, suggests }: PageProps) {
     const [posts, setPosts] = useState([])
     const [pers, setPers] = useState(0)
     const [suggestions, setSuggestions] = useState(suggests.data)
-    console.log(suggestions)
 
 
 
@@ -32,6 +31,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
     useEffect(() => {
         getPosts()
     }, []);
+    const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("light_mode") == "dark" ?? false);
 
     window.addEventListener("scroll", (item) => {
 
@@ -98,6 +98,8 @@ export default function Dashboard({ auth, suggests }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
+            isDarkMode={isDarkMode}
+            setIsDarkMode={setIsDarkMode}
 
         >
             <Head title="Dashboard" />
@@ -106,7 +108,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                 <div className="hidden mt-20 min-h-screen  lg:block bg-inherit m-0  w-1/4 me-6  sm:rounded-lg">
                     <div className='fixed flex flex-col p-2 overflow-hidden '>
                         {items.map((item) => {
-                            return <Link href={item.path} key={item.key} className='text-sm m-2 dark:text-white font-bold'>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
+                            return <Link href={item.path} key={item.key} className={`text-sm m-2 ${isDarkMode ? "text-white" : "text-black"}  font-bold`}>{<item.icon className='w-6 h-6 inline-block mx-2 text-sky-600' />}{item.title.toLocaleUpperCase()}</Link >
 
                         })}
                     </div>
@@ -115,10 +117,10 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                 <div className="  p-2  flex flex-col items-start min-h-screen md:w-2/3 lg:w-3/6   overflow-hidden sm:rounded-lg ">
                     <h1 className='p-2 mb-2 mt-14 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
 
-                    <SharePost user={auth.user!} posts={posts} setPosts={setPosts} />
+                    <SharePost isDarkMode={isDarkMode} user={auth.user!} posts={posts} setPosts={setPosts} />
 
 
-                    {posts && posts.map(item => <Post commentsCount={item.commentsCount} auth={auth} likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={item.user_id} username={item.user_name} date={item.date} post_id={item.id}
+                    {posts && posts.map(item => <Post isDarkMode={isDarkMode} commentsCount={item.commentsCount} auth={auth} likes={item.likes} dislikes={item.dislikes} reaction={item.reaction} title={item.title} user_id={item.user_id} username={item.user_name} date={item.date} post_id={item.id}
                         filename={item.user_picture} files={item.files} />)}
                     <ContentLoader
                         speed={4}
@@ -152,9 +154,9 @@ export default function Dashboard({ auth, suggests }: PageProps) {
 
                 <div
                     className=" md:block   hidden bg-sk-600 p-4 md:w-1/3  lg:w-1/4 text-center bg-inherit fixed right-0  top-14 min-h-screen   overflow-hidden  sm:rounded-lg">
-                    <fieldset className='border rounded-xl p-4 items-center w-full  border-2 dark:bg-black dark:text-white '>
+                    <fieldset className={`border rounded-xl p-4 items-center w-full  border-2 ${isDarkMode ? "bg-b" : "bg-white"}  `}>
                         <legend><UserGroupIcon className='w-10 text-sky-600 inline-block ' /> <span className='font-bold'>Suggest Friends</span></legend>
-                        {suggestions.map((elem: any) => <SuggestItem user={elem} />)}
+                        {suggestions.map((elem: any) => <SuggestItem isDarkMode={isDarkMode} user={elem} />)}
 
                     </fieldset>
 

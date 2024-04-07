@@ -5,8 +5,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { Link } from '@inertiajs/react';
 import SearchInput from './SearchInput';
+import LightButton from './LightMode';
 
-export default function Nav({ filename, className }) {
+export default function Nav({ filename, className, isDarkMode, setIsDarkMode }) {
+
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [image, setImage] = useState("")
@@ -46,7 +48,7 @@ export default function Nav({ filename, className }) {
 
     return (
         <>
-            <nav className={`border-bottom border-black dark:bg-black bg-white px-6 shadow-lg dark:shadow-sky-800 py-2 fixed w-full z-50 ${className}`}>
+            <nav className={`border-bottom border-black ${isDarkMode ? "bg-black shadow-sky-800" : "bg-white"}  px-6 shadow-lg  py-2 fixed w-full z-50 ${className}`}>
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                         <img className="h-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="" />
@@ -72,6 +74,7 @@ export default function Nav({ filename, className }) {
                             <div className="absolute group-hover:border-b-2 group-hover:cursor-pointer mt-2 border-blue-500 w-full transition-all duration-100 ease-in-out "></div>
                         </div>
                     </div>
+                    <LightButton isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
                     <div className="flex justify-evenly ">
                         <div className="">
                             <div className="ml-4 flex items-center md:ml-6">

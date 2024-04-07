@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function SharePost({ user, posts, setPosts }) {
+export default function SharePost({ user, posts, setPosts, isDarkMode }) {
     const [postFile, setPostFile] = useState(null)
     const [title, setTitle] = useState("")
     const [user_id, setUserId] = useState(user.id)
@@ -29,7 +29,7 @@ export default function SharePost({ user, posts, setPosts }) {
         }
     }
     return (
-        <div className=' w-full px-4 flex border border-2 shadow-2xl flex-col items-center rounded-xl bg-white dark:bg-black lg:w-3/4'>
+        <div className={` w-full px-4 flex border border-2 shadow-2xl flex-col items-center rounded-xl ${isDarkMode ? "bg-black" : "bg-white"}   lg:w-3/4`}>
             {uploadProgress > 0 && (
                 <div className="relative w-full pt-1">
                     <div className="flex mb-2 items-center justify-between">
@@ -52,7 +52,7 @@ export default function SharePost({ user, posts, setPosts }) {
                     </div>
                 </div>
             )}
-            <textarea name="" id="mytextarea" value={title} onChange={e => setTitle(e.target.value)} placeholder={`What's on your mind, ${user.first_name.toUpperCase()}?`} className='w-full mt-2 rounded-xl dark:bg-gray-800 bg-gray-200   text-md border-none  resize-none' rows="2"></textarea>
+            <textarea name="" id="mytextarea" value={title} onChange={e => setTitle(e.target.value)} placeholder={`What's on your mind, ${user.first_name.toUpperCase()}?`} className={`w-full mt-2 rounded-xl ${isDarkMode ? 'bg-gray-800' : "bg-gray-200"}    text-md border-none  resize-none`} rows="2"></textarea>
             <form onSubmit={submit} encType="multipart/form-data" className="w-full space-y-2">
                 <input type="file" onChange={e => setPostFile(e.target.files[0]!)} name="Postfile" className='hidden' id="post-file" />
                 <div className='flex w-full  items-center justify-between'>

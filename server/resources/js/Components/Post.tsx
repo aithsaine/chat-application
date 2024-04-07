@@ -7,7 +7,7 @@ import Comment from "@/Components/Comment";
 import { Link } from '@inertiajs/react';
 import VideoPlayer from "./VideoPlayer";
 
-export default function Post({ username, title, files, date, filename, post_id, user_id, likes, dislikes, reaction, commentsCount, auth }) {
+export default function Post({ username, isDarkMode, title, files, date, filename, post_id, user_id, likes, dislikes, reaction, commentsCount, auth }) {
     const [lks, setLikes] = useState(likes)
     const [dsl, setDislikes] = useState(dislikes)
     const [reactType, setReactType] = useState(reaction)
@@ -53,12 +53,12 @@ export default function Post({ username, title, files, date, filename, post_id, 
         <>
 
             <div style={{ minHeight: "20px" }}
-                className={`w-full my-4 relative flex shadow-xl flex-col items-start mt-4 rounded-xl dark:bg-black dark:text-white lg:w-3/4`}>
+                className={`w-full my-4 relative flex shadow-xl flex-col items-start mt-4 rounded-xl ${isDarkMode ? "bg-black text-white" : "text-black"} lg:w-3/4`}>
                 <Link href={`/user/${user_id}`} className="flex items-center">
                     <img className="rounded-full object-cover h-10 w-10" src={image} />
                     <div className="ml-2 flex flex-col items-start">
-                        <div className="leading-snug text-sm dark:text-white font-bold">{username.toUpperCase()}</div>
-                        <div className="leading-snug text-xs dark:text-gray-400 ">{date}</div>
+                        <div className={`leading-snug text-sm ${isDarkMode ? "text-white" : ""}  font-bold`}>{username.toUpperCase()}</div>
+                        <div className={`leading-snug text-xs ${isDarkMode ? "text-gray-400" : ""} `}>{date}</div>
                     </div>
                 </Link>
 
