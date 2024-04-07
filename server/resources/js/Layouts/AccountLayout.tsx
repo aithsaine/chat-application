@@ -4,7 +4,7 @@ import { Head } from "@inertiajs/react"
 import axios from 'axios';
 import Nav from '@/Components/Nav';
 
-export default function AccountLayout({ auth, user, children }) {
+export default function AccountLayout({ auth, user, isDarkMode, setIsDarkMode, children }) {
     const [posts, setPosts] = useState([]);
     const [image, setImage] = useState("")
     const [User, setUser] = useState(user)
@@ -46,8 +46,8 @@ export default function AccountLayout({ auth, user, children }) {
         }
     }
     return (
-        <>
-            <Nav filename={auth.user.picture} />
+        <main className={`${isDarkMode ? "bg-black text-white" : ""} min-h-screen`}>
+            <Nav isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} filename={auth.user.picture} />
 
             {/* <div className="relative mt-20 flex h-32 w-full justify-center rounded-xl bg-cover" style={{ backgroundImage: 'url("https://i.ibb.co/FWggPq1/banner.png")' }}>
                 <div className="absolute -bottom-12 flex h-[88px] w-[88px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
@@ -138,33 +138,33 @@ export default function AccountLayout({ auth, user, children }) {
                 </div>
             </div> */}
 
-            <div className="bg-white shadow-md rounded-lg py-16 overflow-hidden">
+            <div className={`${isDarkMode ? "bg-black text-white" : "bg-white text-black"} shadow-md rounded-lg py-16 overflow-hidden`}>
                 {/* Header */}
-                <div className="bg-blue-600 px-4 py-2 text-center">
+                <div className=" px-4 py-2 text-center">
                     {/* User Avatar */}
                     <img className="w-32 h-32 rounded-full object-cover mx-auto mb-4" src={image} alt="User Avatar" />
                     {/* User Name */}
-                    <h2 className="text-xl font-semibold text-white">{user.first_name} {user.last_name}</h2>
+                    <h2 className="text-xl font-semibold">{user.first_name} {user.last_name}</h2>
                     {/* Job Title */}
-                    <p className="text-sm text-gray-200">Software Engineer</p>
+                    <p className="text-sm ">Software Engineer</p>
                 </div>
                 {/* Body */}
                 <div className="p-4 text-center">
                     {/* Description */}
-                    <p className="text-gray-700 mb-4">Passionate about building innovative software solutions.</p>
+                    <p className=" mb-4">Passionate about building innovative software solutions.</p>
                     {/* Follower Count */}
                     <div className="flex justify-center mb-4">
                         <div className="flex flex-col  justify-center mr-6">
-                            <span className="text-gray-600">Followers</span>
-                            <span className="text-gray-800 font-semibold">{Followers}</span>
+                            <span className="">Followers</span>
+                            <span className=" font-semibold">{Followers}</span>
                         </div>
                         <div className="mr-6 flex flex-col  justify-center">
-                            <span className="text-gray-600">Following</span>
-                            <span className="text-gray-800 font-semibold">{Following}</span>
+                            <span className="">Following</span>
+                            <span className=" font-semibold">{Following}</span>
                         </div>
                         <div className='flex flex-col  justify-center'>
-                            <span className="text-gray-600">Posts</span>
-                            <span className="text-gray-800 font-semibold">{User.posts}</span>
+                            <span className="">Posts</span>
+                            <span className="font-semibold">{User.posts}</span>
                         </div>
                     </div>
                     {/* Buttons */}
@@ -197,7 +197,7 @@ export default function AccountLayout({ auth, user, children }) {
                     {children}
                 </div>
             </section>
-        </>
+        </main>
 
     )
 }
