@@ -64,5 +64,6 @@ export default function SharePost({ user, posts, setPosts, isDarkMode }) {
                 </div>
             </form>
 
-        </div>)
+        </div>
+    )
 }

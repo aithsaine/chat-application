@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\InAuthenticatedMiddleware;
 use App\Http\Resources\UserResource;
@@ -67,6 +68,10 @@ Route::controller(CommentController::class)->group(function () {
 Route::controller(FollowController::class)->group(function () {
     Route::post("follow/store", "store")->name("follow.store");
     Route::delete("follow/{user_id}/delete", "delete")->name("follow.delete");
+});
+
+Route::controller(MessageController::class)->group(function () {
+    Route::get("chat", "index");
 });
 
 require __DIR__ . '/auth.php';

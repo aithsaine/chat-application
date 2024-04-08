@@ -84,7 +84,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
         {
             key: 5,
             title: "Chat",
-            path: "/",
+            path: "/chat",
             icon: ChatBubbleBottomCenterTextIcon
         },
         {
@@ -100,7 +100,6 @@ export default function Dashboard({ auth, suggests }: PageProps) {
             user={auth.user}
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
-
         >
             <Head title="Dashboard" />
 
