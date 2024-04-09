@@ -21,6 +21,8 @@ export default function UserItem({ user, isDarkMode, selectedUserId, setSelected
         getPict();
 
     }, [])
+    const [visible, setVisible] = useState(false)
+
 
 
     return (
@@ -32,9 +34,33 @@ export default function UserItem({ user, isDarkMode, selectedUserId, setSelected
                 console.log(selectedUserId)
             }}
         >
-            <img className="rounded-full object-cover h-10 w-10" src={image} />
-            <div className="ml-2 flex flex-col items-start sm:block hidden">
-                <div className={`leading-snug text-xs flex items-start  ${isDarkMode ? "text-white" : "font-bold"}  `}><span>{user.first_name.toUpperCase() + " " + user.last_name.toUpperCase()}</span></div>
+            <motion.img
+                onMouseEnter={() => setVisible(true)}
+                onMouseLeave={() => setVisible(false)}
+                className="rounded-full object-cover h-10 w-10" src={image} />
+            {visible && <motion.div
+                variants={{
+                    hidden: {
+                        x: 50,
+                        opacity: 0
+                    },
+                    show: {
+                        x: 0,
+                        opacity: 1,
+                        transition: {
+                            duration: 0.5
+                        }
+                    }
+                }}
+                initial="hidden"
+                animate={visible ? "show" : "hidden"}
+
+
+
+                className={`leading-snug text-xs ms-12 w-full  flex items-start fixed z-50    ${isDarkMode ? "text-white" : "font-bold"}  `}><span>{user.first_name.toUpperCase() + " " + user.last_name.toUpperCase()}</span>
+            </motion.div>}
+            <div className="ml-2 flex flex-col justify-start  items-start md:block hidden">
+                <div className={`leading-snug text-xs   ${isDarkMode ? "text-white" : "font-bold"}  `}><span>{user.first_name.toUpperCase() + " " + user.last_name.toUpperCase()}</span></div>
                 <div className="leading-snug text-xs dark:text-gray-400 ">Web Developer</div>
             </div>
         </button>

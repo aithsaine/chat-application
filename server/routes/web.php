@@ -3,8 +3,10 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
-use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ChatController;
+
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Middleware\InAuthenticatedMiddleware;
 use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Application;
@@ -70,8 +72,11 @@ Route::controller(FollowController::class)->group(function () {
     Route::delete("follow/{user_id}/delete", "delete")->name("follow.delete");
 });
 
-Route::controller(MessageController::class)->group(function () {
-    Route::get("chat", "index");
+Route::controller(ChatController::class)->group(function () {
+    Route::get("chat", "show")->middleware(["auth"]);
+    Route::get("chat/messages", "getChat");
+    Route::post("chat", "saveMessage");
 });
+
 
 require __DIR__ . '/auth.php';
