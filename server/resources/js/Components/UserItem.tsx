@@ -31,7 +31,6 @@ export default function UserItem({ user, isDarkMode, selectedUserId, setSelected
 
             onClick={e => {
                 setSelectedUserId(user.id)
-                console.log(selectedUserId)
             }}
         >
             <motion.img

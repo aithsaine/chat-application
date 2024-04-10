@@ -3,13 +3,13 @@ import RightSideBoxChat from '@/Components/RightSideBoxChat';
 import UserItem from '@/Components/UserItem';
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import InputEmoji from "react-input-emoji";
 
-
-export default function chat({ user, friends }) {
+import { echo } from "../echo"
+export default function chat({ auth, user, friends }) {
     const [selectedUserId, setSelectedUserId] = useState("")
     const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("light_mode") == "dark" ?? false);
     const [friend, setFriends] = useState(friends.data)
@@ -24,7 +24,9 @@ export default function chat({ user, friends }) {
         }
         getMsgs()
 
+
     }, [])
+    echo.channel("messageWith." + auth.user.id).listen("SendMessage", function (e) { setMessages([...messages, e.message]) })
     const chatHandler = async () => {
         const resp = await axios.post("chat", {
             receiver_id: selectedUserId,

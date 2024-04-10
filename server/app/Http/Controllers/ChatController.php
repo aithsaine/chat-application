@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendMessage;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\Chat;
@@ -39,6 +40,7 @@ class ChatController extends Controller
         $message->receiver_id = $request->receiver_id;
         $message->message = $request->message;
         $message->save();
+        broadcast(new SendMessage($message));
         return response()->json(["message" => $message->toArray(), "success" => true]);
     }
 }
