@@ -21,7 +21,6 @@ export default function Nav({ filename, className, isDarkMode, setIsDarkMode }) 
 
                 const blobUrl = URL.createObjectURL(response.data);
                 setImage(blobUrl)
-                console.log(response.data)
             }
 
         }

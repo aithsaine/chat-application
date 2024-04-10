@@ -71,6 +71,7 @@ Route::middleware(["auth", 'last_seen'])->group(function () {
     Route::get("chat", [ChatController::class, "show"])->middleware(["auth"]);
     Route::get("chat/messages", [ChatController::class, "getChat"]);
     Route::post("chat", [ChatController::class, "saveMessage"]);
+    Route::post("chat/{receiver_id}/{sender_id}/markseen", [ChatController::class, "markseen"]);
 });
 
 

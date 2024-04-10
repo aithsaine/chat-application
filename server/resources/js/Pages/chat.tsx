@@ -16,7 +16,14 @@ export default function chat({ auth, user, friends }) {
     const [friend, setFriends] = useState(friends.data)
     const [newMsg, setNewMsg] = useState("")
     const [messages, setMessages] = useState([])
-    console.log(friends)
+    useEffect(() => {
+        const markSeen = async () => {
+            const resp = await axios.post(`chat/${auth.user.id}/${selectedUserId}/markseen`)
+        }
+        markSeen()
+    }, [selectedUserId])
+
+
     useEffect(() => {
         const getMsgs = async () => {
             const resp = await axios.get(`chat/messages`);
@@ -29,19 +36,23 @@ export default function chat({ auth, user, friends }) {
     }, [])
     echo.channel("messageWith." + auth.user.id).listen("SendMessage", function (e) {
         setMessages([...messages, e.message])
+
         setFriends(friend.map((elem: any) => {
-            if (elem.id === e.message.sender_id) {
+            if (elem.id === e.message.sender_id && elem.id != selectedUserId) {
 
                 return { ...elem, msgs_not_seen: elem.msgs_not_seen + 1 }
             }
             return elem
-
         }))
+        const markSeen = async () => {
+            const resp = await axios.post(`chat/${auth.user.id}/${selectedUserId}/markseen`)
+        }
+        markSeen()
+
     })
     friend.map((element: any) => {
 
         echo.channel("UserStatus." + element.id).listen("UpdateUserStatus", function (e: any) {
-            console.log(e.user)
             setFriends(friend.map((item: any) => {
                 if (item.id == e.user.id) {
                     return { ...item, status: e.user.status }

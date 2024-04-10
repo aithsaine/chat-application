@@ -43,4 +43,19 @@ class ChatController extends Controller
         broadcast(new SendMessage($message));
         return response()->json(["message" => $message->toArray(), "success" => true]);
     }
+
+
+    public function markseen($receiver_id, $sender_id)
+    {
+        $chats = Chat::where("receiver_id", $receiver_id)
+            ->where("sender_id", $sender_id)
+            ->whereNull("seen_at")
+            ->get();
+
+        // Update the seen_at field for the retrieved chats
+        $chats->each(function ($chat) {
+            $chat->update(['seen_at' => now()]);
+        });
+        return response()->json(["success" => true]);
+    }
 }
