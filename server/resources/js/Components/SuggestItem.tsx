@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { motion } from "framer-motion"
 export default function SuggestItem({ user, isDarkMode }: any) {
-    const [followStatus, setFollowStatus] = useState(user.status)
+    const [followStatus, setFollowStatus] = useState(user.FollowStatus)
 
 
     const [image, setImage] = useState("")

@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Client\Request as ClientRequest;
 
@@ -94,5 +96,11 @@ class ProfileController extends Controller
         }
         $request->user()->save();
         return redirect("/feed");
+    }
+
+    public function getUser($user_id)
+    {
+        $user = new UserResource(User::find($user_id));
+        return response()->json(["success" => true, "status" => $user->status]);
     }
 }

@@ -20,63 +20,73 @@ Route::get('/', function () {
     return Inertia::render('Welcome', []);
 })->name("welcome")->middleware(InAuthenticatedMiddleware::class);
 
-Route::get('/storage/picture/{filename}', function ($filename) {
-    $filePath = Storage::path('/profiles/' . $filename);
 
-    $resp = response();
 
-    return response()->file($filePath);
-})->middleware("auth")->name("picture.get");
+// Structured Routes by Middleware
 
-Route::get('/feed', function () {
-    $suggestItems =
-        UserResource::collection(App\Models\User::whereNot("id", Auth::user()->id)->limit(5)->get()) ?? [];
-    return Inertia::render('Dashboard', [
-        "suggests" => $suggestItems
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(["auth", 'last_seen'])->group(function () {
 
-Route::middleware('auth')->group(function () {
+    Route::get('/storage/picture/{filename}', function ($filename) {
+        $filePath = Storage::path('/profiles/' . $filename);
+
+        $resp = response();
+
+        return response()->file($filePath);
+    })->name("picture.get");
+
+
+    Route::get('/feed', function () {
+        $suggestItems =
+            UserResource::collection(App\Models\User::whereNot("id", Auth::user()->id)->limit(5)->get()) ?? [];
+        return Inertia::render('Dashboard', [
+            "suggests" => $suggestItems
+        ]);
+    })->name('dashboard');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get("user/{user_id}", [ProfileController::class, "getUser"]);
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch("/profile/picture/update", [ProfileController::class, "uploadOnlyPicture"])->name("profile.updatePicture");
-});
-Route::controller(\App\Http\Controllers\PostController::class)->group(function () {
-    Route::get("posts/index", "index")->name("post.index");
-    Route::get("posts/{post_id}/show", "show")->name("post.show");
-    Route::post("post/store", "store")->name("post.store");
-    Route::get("post/assets/posts/{folder}/{filename}", "getPostAsset");
-})->middleware("auth");
+    Route::get("posts/index", [\App\Http\Controllers\PostController::class, "index"])->name("post.index");
+    Route::get("posts/{post_id}/show", [\App\Http\Controllers\PostController::class, "show"])->name("post.show");
+    Route::post("post/store", [\App\Http\Controllers\PostController::class, "store"])->name("post.store");
+    Route::get("post/assets/posts/{folder}/{filename}", [\App\Http\Controllers\PostController::class, "getPostAsset"]);
 
-Route::controller(\App\Http\Controllers\ReactionController::class)->group(function () {
-    Route::post("reaction/store", "store")->name("reaction.store");
-})->middleware("auth");
+    Route::post("reaction/store", [\App\Http\Controllers\ReactionController::class, "store"])->name("reaction.store");
 
-Route::get("feed/upload/file", function () {
-    return Inertia::render("uploadProfilePicture");
-})->middleware("auth")->name("feed.upload.file");
+    Route::get("feed/upload/file", function () {
+        return Inertia::render("uploadProfilePicture");
+    })->name("feed.upload.file");
 
 
-Route::controller(AccountController::class)->group(function () {
-    Route::get("user/{user_id}", "show")->name("account.show")->middleware(['auth']);
-});
+    Route::get("user/{user_id}", [AccountController::class, "show"])->name("account.show");
+    Route::get("comments/{post_id}", [CommentController::class, "index"]);
+    Route::post("comment/store", [CommentController::class, "store"])->name("comment.store");
 
-Route::controller(CommentController::class)->group(function () {
-    Route::get("comments/{post_id}", "index");
-    Route::post("comment/store", "store")->name("comment.store");
+
+    Route::post("follow/store", [FollowController::class, "store"])->name("follow.store");
+    Route::delete("follow/{user_id}/delete", [FollowController::class, "delete"])->name("follow.delete");
+    Route::get("chat", [ChatController::class, "show"])->middleware(["auth"]);
+    Route::get("chat/messages", [ChatController::class, "getChat"]);
+    Route::post("chat", [ChatController::class, "saveMessage"]);
 });
 
-Route::controller(FollowController::class)->group(function () {
-    Route::post("follow/store", "store")->name("follow.store");
-    Route::delete("follow/{user_id}/delete", "delete")->name("follow.delete");
-});
 
-Route::controller(ChatController::class)->group(function () {
-    Route::get("chat", "show")->middleware(["auth"]);
-    Route::get("chat/messages", "getChat");
-    Route::post("chat", "saveMessage");
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 require __DIR__ . '/auth.php';

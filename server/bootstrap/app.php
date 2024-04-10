@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\InAuthenticatedMiddleware;
+use App\Http\Middleware\LastSeen;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->append(InAuthenticatedMiddleware::class);
+        $middleware->alias([
+            "last_seen" => LastSeen::class
+        ]);
 
         //
     })

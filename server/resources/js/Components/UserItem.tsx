@@ -1,10 +1,10 @@
-import { UserPlusIcon } from '@heroicons/react/24/solid'
+import { WifiIcon } from '@heroicons/react/24/solid'
 import { Link } from '@inertiajs/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { motion } from "framer-motion"
-export default function UserItem({ user, isDarkMode, selectedUserId, setSelectedUserId }: any) {
+export default function UserItem({ user, isDarkMode, status, selectedUserId, setSelectedUserId }: any) {
     const [image, setImage] = useState("")
     useEffect(() => {
         const getPict = async () => {
@@ -60,7 +60,7 @@ export default function UserItem({ user, isDarkMode, selectedUserId, setSelected
             </motion.div>}
             <div className="ml-2 flex flex-col justify-start  items-start md:block hidden">
                 <div className={`leading-snug text-xs   ${isDarkMode ? "text-white" : "font-bold"}  `}><span>{user.first_name.toUpperCase() + " " + user.last_name.toUpperCase()}</span></div>
-                <div className="leading-snug text-xs dark:text-gray-400 ">Web Developer</div>
+                <div className="leading-snug text-xs dark:text-gray-400 ">{status == "Online" ? <span className='flex items-center text-green-600' ><WifiIcon className='w-3 h-3' /> {status}</span> : status}</div>
             </div>
         </button>
 

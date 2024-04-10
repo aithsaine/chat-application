@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Helper;
 use App\Models\Follower;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,7 +28,9 @@ class UserResource extends JsonResource
             "followers" => count($this->followers),
             "following" => count($this->following),
             "posts" => count($this->posts),
-            "status" => Follower::where("user_id", Auth::user()->id)->where("follower_id", $this->id)->first()?->status
+            "FollowStatus" => Follower::where("user_id", Auth::user()->id)->where("follower_id", $this->id)->first()?->status,
+            "status" => Helper::userLastActivityStatus($this->last_seen)
+
         ];
     }
 }
