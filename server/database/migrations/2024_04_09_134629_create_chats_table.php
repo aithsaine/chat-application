@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger("receiver_id");
             $table->unsignedBigInteger("sender_id");
             $table->text("message");
-            $table->timestamp("seen_at");
+            $table->timestamp("seen_at")->nullable();
             $table->timestamps();
         });
     }

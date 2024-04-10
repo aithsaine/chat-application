@@ -4,7 +4,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { motion } from "framer-motion"
-export default function UserItem({ user, isDarkMode, status, selectedUserId, setSelectedUserId }: any) {
+export default function UserItem({ user, isDarkMode, msgs_not_seen, status, selectedUserId, setSelectedUserId }: any) {
     const [image, setImage] = useState("")
     useEffect(() => {
         const getPict = async () => {
@@ -23,11 +23,9 @@ export default function UserItem({ user, isDarkMode, status, selectedUserId, set
     }, [])
     const [visible, setVisible] = useState(false)
 
-
-
     return (
         <button
-            className={` flex items-center   justify-between  cursor-pointer m-2 `}
+            className={` flex relative items-center   justify-between  cursor-pointer m-2 `}
 
             onClick={e => {
                 setSelectedUserId(user.id)
@@ -37,6 +35,7 @@ export default function UserItem({ user, isDarkMode, status, selectedUserId, set
                 onMouseEnter={() => setVisible(true)}
                 onMouseLeave={() => setVisible(false)}
                 className="rounded-full object-cover h-10 w-10" src={image} />
+            {msgs_not_seen > 0 && <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500  text-white">{msgs_not_seen}</span>}
             {visible && <motion.div
                 variants={{
                     hidden: {

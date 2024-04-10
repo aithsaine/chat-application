@@ -27,7 +27,17 @@ export default function chat({ auth, user, friends }) {
 
 
     }, [])
-    echo.channel("messageWith." + auth.user.id).listen("SendMessage", function (e) { setMessages([...messages, e.message]) })
+    echo.channel("messageWith." + auth.user.id).listen("SendMessage", function (e) {
+        setMessages([...messages, e.message])
+        setFriends(friend.map((elem: any) => {
+            if (elem.id === e.message.sender_id) {
+
+                return { ...elem, msgs_not_seen: elem.msgs_not_seen + 1 }
+            }
+            return elem
+
+        }))
+    })
     friend.map((element: any) => {
 
         echo.channel("UserStatus." + element.id).listen("UpdateUserStatus", function (e: any) {
@@ -45,7 +55,6 @@ export default function chat({ auth, user, friends }) {
         const resp = await axios.post("chat", {
             receiver_id: selectedUserId,
             message: newMsg
-
         })
         if (resp.data.success)
             setMessages([...messages, resp.data.message])
@@ -61,7 +70,7 @@ export default function chat({ auth, user, friends }) {
                 <div className={`md:w-1/3  rounded-xl overflow-y-auto ${isDarkMode ? "bg-slate-800" : "bg-gray-200"}`}>
                     {friend.map((item: any) => {
                         return <div className={`p-1 ${selectedUserId == item.id ? "bg-sky-100" : ""}`}>
-                            <UserItem status={item.status} selectedUserId={selectedUserId} setSelectedUserId={setSelectedUserId} user={item} isDarkMode={isDarkMode} />
+                            <UserItem msgs_not_seen={item.msgs_not_seen} status={item.status} selectedUserId={selectedUserId} setSelectedUserId={setSelectedUserId} user={item} isDarkMode={isDarkMode} />
                             <hr className={`opacity-20 ${isDarkMode ? 'text-white' : "divide-neutral-950"}`} />
                         </div>
                     })}
