@@ -19,6 +19,14 @@ export default function chat({ auth, user, friends }) {
     useEffect(() => {
         const markSeen = async () => {
             const resp = await axios.post(`chat/${auth.user.id}/${selectedUserId}/markseen`)
+            if (resp.data.success) {
+                setFriends(friend.map(elem => {
+                    if (elem.id === selectedUserId) {
+                        return { ...elem, msgs_not_seen: 0 }
+                    }
+                    return elem
+                }))
+            }
         }
         markSeen()
     }, [selectedUserId])
@@ -47,7 +55,7 @@ export default function chat({ auth, user, friends }) {
         const markSeen = async () => {
             const resp = await axios.post(`chat/${auth.user.id}/${selectedUserId}/markseen`)
         }
-        markSeen()
+        selectedUserId ?? markSeen()
 
     })
     friend.map((element: any) => {
