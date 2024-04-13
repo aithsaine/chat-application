@@ -3,15 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faUserFriends, faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import SearchInput from './SearchInput';
 import LightButton from './LightMode';
 
 export default function Nav({ filename, className, isDarkMode, setIsDarkMode }) {
-
+    const auth = usePage().props.auth;
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [image, setImage] = useState("")
+    const [msgs_not_seen, SetMsgNotSeen] = useState(auth.user.msgs_not_seen);
     useEffect(() => {
         const getPict = async () => {
             const response = await axios.get(`/storage/picture/${filename}`, {
@@ -53,32 +54,28 @@ export default function Nav({ filename, className, isDarkMode, setIsDarkMode }) 
                         <img className="h-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="" />
                         <SearchInput />
                     </div>
-                    <div className="relative flex justify-between w-1/5 items-center">
+                    <div className="relative flex justify-around w-2/5 items-center">
                         <div className="relative group">
                             <div className="group-hover:bg-gray-3  00 cursor-pointer p-2 group-hover:rounded-lg transition-all ease-in-out duration-300">
-                                <Link href={"/feed"}> <img className="md:h-6 h-4 cursor-pointer" src="https://img.icons8.com/external-kmg-design-flat-kmg-design/32/000000/external-home-ui-essential-kmg-design-flat-kmg-design.png" /></Link>
+                                <Link href={"/feed"}> <img className="md:h-8 h-6 cursor-pointer" src="https://img.icons8.com/external-kmg-design-flat-kmg-design/32/000000/external-home-ui-essential-kmg-design-flat-kmg-design.png" /></Link>
                             </div>
                             <div className="absolute group-hover:border-b-2 group-hover:cursor-pointer mt-2 border-blue-500 w-full transition-all duration-100 ease-in-out "></div>
                         </div>
+
                         <div className="relative group">
                             <div className="group-hover:bg-gray-3  00 cursor-pointer p-2 group-hover:rounded-lg transition-all ease-in-out duration-300">
-                                <img className="md:h-6 h-4 cursor-pointer" src="https://img.icons8.com/fluency/48/000000/conference-call.png" />
-                            </div>
-                            <div className="absolute group-hover:border-b-2 group-hover:cursor-pointer mt-2 border-blue-500 w-full transition-all duration-100 ease-in-out"></div>
-                        </div>
-                        <div className="relative group">
-                            <div className="group-hover:bg-gray-3  00 cursor-pointer p-2 group-hover:rounded-lg transition-all ease-in-out duration-300">
-                                <img className="md:h-6 h-4 cursor-pointer" src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-watch-call-to-action-bearicons-outline-color-bearicons.png" />
+                                <img className="md:h-8 h-6 cursor-pointer" src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-watch-call-to-action-bearicons-outline-color-bearicons.png" />
                             </div>
                             <div className="absolute group-hover:border-b-2 group-hover:cursor-pointer mt-2 border-blue-500 w-full transition-all duration-100 ease-in-out "></div>
                         </div>
                         {/* Add the messages button */}
                         <div className="relative group">
                             <div className="group-hover:bg-gray-3  00 cursor-pointer p-2 group-hover:rounded-lg transition-all ease-in-out duration-300">
-                                <Link href='/chat'>   <img className="md:h-6 h-4 cursor-pointer" src="https://img.icons8.com/fluency/48/speech-bubble-with-dots--v1.png" /></Link>
+                                <Link href='/chat'>   <img className="md:h-8 h-6 cursor-pointer" src="https://img.icons8.com/fluency/48/speech-bubble-with-dots--v1.png" /></Link>
                             </div>
                             <div className="absolute group-hover:border-b-2 group-hover:cursor-pointer mt-2 border-blue-500 w-full transition-all duration-100 ease-in-out "></div>
-                        </div>
+                            {msgs_not_seen > 0 && <span className="absolute top-2 end-0 inline-flex items-center py-0.5 px-1.5 rounded-lg text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500  text-white">{2}</span>
+                            }                        </div>
 
 
                     </div>

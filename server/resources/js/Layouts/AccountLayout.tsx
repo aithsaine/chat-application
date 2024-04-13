@@ -8,7 +8,7 @@ export default function AccountLayout({ auth, user, isDarkMode, setIsDarkMode, c
     const [posts, setPosts] = useState([]);
     const [image, setImage] = useState("")
     const [User, setUser] = useState(user)
-    const [followStatus, setFollowStatus] = useState(User.status)
+    const [followStatus, setFollowStatus] = useState(User.FollowStatus)
     const [Following, setFollowing] = useState(User.following)
     const [Followers, setFollowers] = useState(User.followers)
 

@@ -59,8 +59,6 @@ Route::middleware(["auth", 'last_seen'])->group(function () {
     Route::get("feed/upload/file", function () {
         return Inertia::render("uploadProfilePicture");
     })->name("feed.upload.file");
-
-
     Route::get("user/{user_id}", [AccountController::class, "show"])->name("account.show");
     Route::get("comments/{post_id}", [CommentController::class, "index"]);
     Route::post("comment/store", [CommentController::class, "store"])->name("comment.store");

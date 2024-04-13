@@ -12,12 +12,12 @@ const LightButton = ({ isDarkMode, setIsDarkMode }) => {
 
     return (
         <motion.button
-            className={`flex items-center px-4 py-2 rounded-full border ${isDarkMode ? 'bg-gray-800 text-white border-gray-800' : 'bg-gray-200 text-gray-800 border-gray-200'
+            className={`flex items-center px-2 py-2 mx-2 rounded-full border ${isDarkMode ? 'bg-gray-800 text-white border-gray-800' : 'bg-gray-200 text-gray-800 border-gray-200'
                 }`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             animate={{
-                x: isDarkMode ? [0, 20] : [0, -20], // Move to right for dark mode and left for light mode
+                x: isDarkMode ? [0, 10] : [0, -10], // Move to right for dark mode and left for light mode
             }}
             transition={{
                 type: 'spring',
@@ -25,7 +25,7 @@ const LightButton = ({ isDarkMode, setIsDarkMode }) => {
             }}
             onClick={toggleMode}
         >
-            {isDarkMode ? <SunIcon className="w-6 h-6" /> : <MoonIcon className="w-6 h-6" />}
+            {isDarkMode ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
         </motion.button>
 
     );
