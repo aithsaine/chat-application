@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Follower;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class FollowController extends Controller
 {
@@ -21,9 +22,10 @@ class FollowController extends Controller
             $follower->status = "followed";
             $follower->follower_id = $request->user_id;
             $save = $follower->save();
-            if ($save)
-                return response()->json(["status" => "success"]);
-            return response()->json(["status" => "failed"]);
+            // if ($save)
+            //     return response()->json(["status" => "success"]);
+            // return response()->json(["status" => "failed"]);
+            return Inertia::visit('/feed');
         }
     }
 

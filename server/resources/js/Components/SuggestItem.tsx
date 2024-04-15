@@ -4,6 +4,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { motion } from "framer-motion"
+import { Inertia } from '@inertiajs/inertia'
+
 export default function SuggestItem({ user, isDarkMode }: any) {
     const [followStatus, setFollowStatus] = useState(user.FollowStatus)
 
@@ -24,18 +26,27 @@ export default function SuggestItem({ user, isDarkMode }: any) {
         getPict();
 
     }, [])
-    const following = async () => {
-        const response = await axios.post("follow/store", { user_id: user.id })
-        if (response.data.status == "success") {
+    const following = async (e) => {
+        e.preventDefault();
+        try {
+
             setFollowStatus("followed")
+            await axios.post("follow/store", { user_id: user.id })
+        } catch (err) {
+            console.log(err)
         }
     }
-    const Unfollowe = async () => {
-        const response = await axios.delete(`follow/${user.id}/delete`)
-        if (response.data.status == "success") {
+    const Unfollowe = async (e) => {
+        e.preventDefault();
+        try {
+
             setFollowStatus("")
+            await axios.delete(`follow/${user.id}/delete`)
+        } catch (err) {
+            console.log(err)
         }
     }
+
 
     return (
         <motion.div variants={

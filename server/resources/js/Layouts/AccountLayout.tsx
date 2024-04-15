@@ -1,6 +1,6 @@
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import React, { useEffect, useState } from 'react'
-import { Head } from "@inertiajs/react"
+import { Head, Link } from "@inertiajs/react"
 import axios from 'axios';
 import Nav from '@/Components/Nav';
 
@@ -31,18 +31,26 @@ export default function AccountLayout({ auth, user, isDarkMode, setIsDarkMode, c
 
 
     }, [])
-    const following = async () => {
-        const response = await axios.post("/follow/store", { user_id: User.id })
-        if (response.data.status == "success") {
+    const following = async (e) => {
+        e.preventDefault();
+        try {
+
             setFollowStatus("followed")
             setFollowers(Followers + 1)
+            await axios.post("follow/store", { user_id: user.id })
+        } catch (err) {
+            console.log(err)
         }
     }
-    const Unfollowe = async () => {
-        const response = await axios.delete(`/follow/${User.id}/delete`)
-        if (response.data.status == "success") {
-            setFollowStatus("")
+    const Unfollowe = async (e) => {
+        e.preventDefault();
+        try {
             setFollowers(Followers - 1)
+
+            setFollowStatus("")
+            await axios.delete(`follow/${user.id}/delete`)
+        } catch (err) {
+            console.log(err)
         }
     }
     return (
@@ -183,8 +191,8 @@ export default function AccountLayout({ auth, user, isDarkMode, setIsDarkMode, c
                         }
                         {auth.user.id != User.id &&
 
-                            < button
-                                className=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-xs py-1 px-4  text-center "   >Message</button>
+                            < Link href={`/chat?userid=${auth.user.id}`}
+                                className=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-xs py-1 px-4  text-center "   >Message</Link>
                         }
 
                     </div>

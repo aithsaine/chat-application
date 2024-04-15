@@ -10,12 +10,17 @@ import InputEmoji from "react-input-emoji";
 
 import { echo } from "../echo"
 import { element } from 'prop-types';
+import { useLocation } from '@inertiajs/inertia-react';
+
+
 export default function chat({ auth, msgs, user, friends }) {
-    const [selectedUserId, setSelectedUserId] = useState("")
     const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("light_mode") == "dark" ?? false);
     const [friend, setFriends] = useState(friends.data)
     const [newMsg, setNewMsg] = useState("")
     const [messages, setMessages] = useState(msgs.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0)))
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const [selectedUserId, setSelectedUserId] = useState(urlParams.get("userid") ?? null)
     useEffect(() => {
         const markSeen = async () => {
             const resp = await axios.post(`chat/${auth.user.id}/${selectedUserId}/markseen`)
