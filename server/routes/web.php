@@ -37,7 +37,7 @@ Route::middleware(["auth", 'last_seen'])->group(function () {
 
     Route::get('/feed', function () {
         $suggestItems =
-            UserResource::collection(App\Models\User::whereNot("id", Auth::user()->id)->limit(5)->get()) ?? [];
+            UserResource::collection(App\Models\User::whereNot("id", Auth::user()->id)->limit(4)->get()) ?? [];
         return Inertia::render('Dashboard', [
             "suggests" => $suggestItems
         ]);

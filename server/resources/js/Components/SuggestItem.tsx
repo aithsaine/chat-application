@@ -33,7 +33,7 @@ export default function SuggestItem({ user, isDarkMode }: any) {
             setFollowStatus("followed")
             await axios.post("follow/store", { user_id: user.id })
         } catch (err) {
-            console.log(err)
+            setFollowStatus("")
         }
     }
     const Unfollowe = async (e) => {
@@ -43,7 +43,7 @@ export default function SuggestItem({ user, isDarkMode }: any) {
             setFollowStatus("")
             await axios.delete(`follow/${user.id}/delete`)
         } catch (err) {
-            console.log(err)
+            setFollowStatus("followed")
         }
     }
 
