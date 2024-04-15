@@ -113,7 +113,7 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                     </div>
 
                 </div>
-                <div className="  p-2  flex flex-col items-start min-h-screen md:w-2/3 lg:w-3/6   overflow-hidden sm:rounded-lg ">
+                <div className="  p-2  flex flex-col items-start min-h-screen md:w-2/3 lg:w-3/6 w-full   overflow-hidden sm:rounded-lg ">
                     <h1 className='p-2 mb-2 mt-14 font-bold text-sky-800 text-xl'>Bonjour {auth.user.gender == "male" ? "Mr" : "Mss"} {auth.user.first_name} {auth.user.last_name}</h1 >
 
                     <SharePost isDarkMode={isDarkMode} user={auth.user!} posts={posts} setPosts={setPosts} />
@@ -123,7 +123,33 @@ export default function Dashboard({ auth, suggests }: PageProps) {
                         filename={item.user_picture} files={item.files} />)}
                     <ContentLoader
                         speed={4}
+                        className={" w-full"}
+                        viewBox="0 0 400 160"
+                        backgroundColor="#f3f3f3"
+                        foregroundColor="#ecebeb"
+                    >
+                        <rect x="48" y="8" rx="18" ry="10" width="88" height="15" />
+                        <rect x="48" y="26" rx="3" ry="3" width="52" height="10" />
+                        <rect x="0" y="56" rx="3" ry="3" width="410" height="15" />
+                        <rect x="0" y="72" rx="3" ry="3" width="380" height="15" />
+                        <rect x="0" y="88" rx="3" ry="3" width="178" height="15" />
+                        <circle cx="20" cy="20" r="20" />
+                    </ContentLoader>
+                    <ContentLoader
+                        speed={2}
                         className={" w-3/4"}
+                        viewBox="0 0 400 160"
+                        backgroundColor="#f3f3f3"
+                        foregroundColor="#ecebeb"
+                    >
+                        <rect x="48" y="8" rx="18" ry="10" width="88" height="30" />
+                        <rect x="48" y="26" rx="3" ry="3" width="52" height="10" />
+                        <rect x="0" y="56" rx="3" ry="3" width="410" height="15" />
+                        <rect x="0" y="72" rx="3" ry="3" width="380" height="15" />
+                        <rect x="0" y="88" rx="3" ry="3" width="178" height="15" />
+                    </ContentLoader>    <ContentLoader
+                        speed={4}
+                        className={" w-full"}
                         viewBox="0 0 400 160"
                         backgroundColor="#f3f3f3"
                         foregroundColor="#ecebeb"
