@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageNotification;
 use App\Events\SendMessage;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\Chat;
-use App\Models\User;
-use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -16,12 +15,14 @@ class ChatController extends Controller
     public function show()
     {
 
-        $friends = UserResource::collection(User::all());
+        $friends = UserResource::collection(auth()->user()->following);
+        $messages = array_merge(Auth::user()->receivedMessages->toArray(), Auth::user()->sendMessages->toArray());
         return Inertia::render(
             "chat",
             [
                 "user" => new UserResource(Auth::user()),
                 "friends" => $friends,
+                "msgs" => $messages
             ]
         );
     }
@@ -41,7 +42,8 @@ class ChatController extends Controller
         $message->message = $request->message;
         $message->save();
         broadcast(new SendMessage($message));
-        return response()->json(["message" => $message->toArray(), "success" => true]);
+        broadcast(new MessageNotification($message));
+        return;
     }
 
 
@@ -56,6 +58,13 @@ class ChatController extends Controller
         $chats->each(function ($chat) {
             $chat->update(['seen_at' => now()]);
         });
+
         return response()->json(["success" => true]);
+    }
+
+    public function getUnseenMessages()
+    {
+        $value =  count(Chat::where("receiver_id", auth()->user()->id)->whereNull("seen_at")->get());
+        return response()->json($value);
     }
 }

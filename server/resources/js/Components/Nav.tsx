@@ -6,13 +6,25 @@ import axios from 'axios';
 import { Link, usePage } from '@inertiajs/react';
 import SearchInput from './SearchInput';
 import LightButton from './LightMode';
+import { echo } from '@/echo';
 
 export default function Nav({ filename, className, isDarkMode, setIsDarkMode }) {
     const auth = usePage().props.auth;
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [image, setImage] = useState("")
-    const [msgs_not_seen, SetMsgNotSeen] = useState(auth.user.msgs_not_seen);
+    const [msgs_not_seen, SetMsgNotSeen] = useState(0);
+
+
+    useEffect(() => {
+        const getUnreadedMsgs = async () => {
+            const resp = await axios.get("messages/unreaded");
+            if (resp.status === 200) {
+                SetMsgNotSeen(resp.data)
+            }
+        }
+        getUnreadedMsgs();
+    })
     useEffect(() => {
         const getPict = async () => {
             const response = await axios.get(`/storage/picture/${filename}`, {
@@ -28,6 +40,13 @@ export default function Nav({ filename, className, isDarkMode, setIsDarkMode }) 
         getPict();
 
     }, [])
+
+    echo.channel("newMsgNotify." + auth.user.id).listen("MessageNotification",
+        function (e) {
+            console.log(e)
+            SetMsgNotSeen(e.countMsg)
+        })
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -74,7 +93,7 @@ export default function Nav({ filename, className, isDarkMode, setIsDarkMode }) 
                                 <Link href='/chat'>   <img className="md:h-8 h-6 cursor-pointer" src="https://img.icons8.com/fluency/48/speech-bubble-with-dots--v1.png" /></Link>
                             </div>
                             <div className="absolute group-hover:border-b-2 group-hover:cursor-pointer mt-2 border-blue-500 w-full transition-all duration-100 ease-in-out "></div>
-                            {msgs_not_seen > 0 && <span className="absolute top-2 end-0 inline-flex items-center py-0.5 px-1.5 rounded-lg text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500  text-white">{2}</span>
+                            {msgs_not_seen > 0 && <span className="absolute top-2 end-0 inline-flex items-center py-0.5 px-1.5 rounded-lg text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500  text-white">{msgs_not_seen}</span>
                             }                        </div>
 
 

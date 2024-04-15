@@ -8,7 +8,7 @@ export default function Account({ auth, user, posts }) {
     return (
         <AccountLayout
             auth={auth}
-            user={user.data}
+            user={user}
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode}
         >

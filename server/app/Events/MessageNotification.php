@@ -2,26 +2,30 @@
 
 namespace App\Events;
 
+use App\Http\Resources\UserResource;
 use App\Models\Chat;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 
-class SendMessage implements ShouldBroadcastNow
+class MessageNotification implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
+    public $countMsg;
     /**
      * Create a new event instance.
      */
     public function __construct($message)
     {
         $this->message = $message;
+        echo $message;
+        $this->countMsg = count(Chat::where("receiver_id", $message->receiver_id)->whereNull("seen_at")->get());
     }
 
     /**
@@ -32,7 +36,7 @@ class SendMessage implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('messageWith.' . $this->message->receiver_id),
+            new Channel('newMsgNotify.' . $this->message->receiver_id),
         ];
     }
 }

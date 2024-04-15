@@ -10,12 +10,12 @@ import InputEmoji from "react-input-emoji";
 
 import { echo } from "../echo"
 import { element } from 'prop-types';
-export default function chat({ auth, user, friends }) {
+export default function chat({ auth, msgs, user, friends }) {
     const [selectedUserId, setSelectedUserId] = useState("")
     const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("light_mode") == "dark" ?? false);
     const [friend, setFriends] = useState(friends.data)
     const [newMsg, setNewMsg] = useState("")
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState(msgs.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0)))
     useEffect(() => {
         const markSeen = async () => {
             const resp = await axios.post(`chat/${auth.user.id}/${selectedUserId}/markseen`)
@@ -28,20 +28,20 @@ export default function chat({ auth, user, friends }) {
                 }))
             }
         }
-        markSeen()
+        selectedUserId && markSeen()
     }, [selectedUserId])
 
 
-    useEffect(() => {
-        const getMsgs = async () => {
-            const resp = await axios.get(`chat/messages`);
-            setMessages(resp.data.messages.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
-            );
-        }
-        getMsgs()
+    // useEffect(() => {
+    //     const getMsgs = async () => {
+    //         const resp = await axios.get(`chat/messages`);
+    //         setMessages(resp.data.messages.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
+    //         );
+    //     }
+    //     getMsgs()
 
 
-    }, [])
+    // }, [])
     echo.channel("messageWith." + auth.user.id).listen("SendMessage", function (e) {
         setMessages([...messages, e.message])
 
@@ -70,18 +70,22 @@ export default function chat({ auth, user, friends }) {
         });
     })
 
-    const chatHandler = async () => {
-        const resp = await axios.post("chat", {
+    const chatHandler = () => {
+        const resp = axios.post("chat", {
             receiver_id: selectedUserId,
             message: newMsg
-        })
-        if (resp.data.success)
-            setMessages([...messages, resp.data.message])
-        setNewMsg("")
+        }).then(resp => {
+
+            if (resp.status == 200) {
+                console.log("resp.data.message")
+                setMessages([...messages, resp.data])
+                setNewMsg("")
+            }
+        }).catch(err => console.log(first))
     }
     return (
         <Authenticated
-            user={user.data}
+            user={auth.user}
             isDarkMode={isDarkMode}
             setIsDarkMode={setIsDarkMode} >
             <Head title="let's Chat" />
@@ -97,23 +101,25 @@ export default function chat({ auth, user, friends }) {
                 {selectedUserId && <div className={`md:w-2/3 w-full relative rounded-xl overflow-y-auto ${isDarkMode ? "bg-slate-800" : "bg-gray-200"}`}>
                     <div className="flex flex-col   absolute bottom-0 p-6 w-full " >
                         {messages && messages.filter(elem => elem.receiver_id == selectedUserId || elem.sender_id == selectedUserId).map(
-                            item => {
+                            (item: any) => {
                                 if (item.receiver_id == selectedUserId) {
                                     return <RightSideBoxChat isDarkMode={isDarkMode} message={item} />
                                 }
                                 return <LeftSideBoxChat isDarkMode={isDarkMode} message={item} />
                             }
                         )}
+                        <div className='flex'>
 
-                        <InputEmoji
-                            inputClass={`${isDarkMode ? "bg-black rounded-2xl text-gray-100" : ""}`}
-                            cleanOnEnter
-                            value={newMsg}
-                            borderColor="black"
-                            onChange={setNewMsg}
-                            placeholder="Type a Comment"
-                        />
-                        <PaperAirplaneIcon onClick={chatHandler} className="w-6 cursor-pointer " title="send" />
+                            <InputEmoji
+                                inputClass={`${isDarkMode ? "bg-black rounded-2xl text-gray-100" : ""}`}
+                                cleanOnEnter
+                                value={newMsg}
+                                borderColor="black"
+                                onChange={setNewMsg}
+                                placeholder="Type a Comment"
+                            />
+                            <PaperAirplaneIcon onClick={chatHandler} className="w-6 cursor-pointer " title="send" />
+                        </div>
                     </div >
                 </div>}
             </section>

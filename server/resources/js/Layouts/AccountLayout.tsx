@@ -7,7 +7,7 @@ import Nav from '@/Components/Nav';
 export default function AccountLayout({ auth, user, isDarkMode, setIsDarkMode, children }) {
     const [posts, setPosts] = useState([]);
     const [image, setImage] = useState("")
-    const [User, setUser] = useState(user)
+    const [User, setUser] = useState(user.data)
     const [followStatus, setFollowStatus] = useState(User.FollowStatus)
     const [Following, setFollowing] = useState(User.following)
     const [Followers, setFollowers] = useState(User.followers)

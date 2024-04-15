@@ -49,27 +49,42 @@ Route::middleware(["auth", 'last_seen'])->group(function () {
     Route::get("user/{user_id}", [ProfileController::class, "getUser"]);
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch("/profile/picture/update", [ProfileController::class, "uploadOnlyPicture"])->name("profile.updatePicture");
+
+
+
+
     Route::get("posts/index", [\App\Http\Controllers\PostController::class, "index"])->name("post.index");
     Route::get("posts/{post_id}/show", [\App\Http\Controllers\PostController::class, "show"])->name("post.show");
     Route::post("post/store", [\App\Http\Controllers\PostController::class, "store"])->name("post.store");
     Route::get("post/assets/posts/{folder}/{filename}", [\App\Http\Controllers\PostController::class, "getPostAsset"]);
 
+
+
     Route::post("reaction/store", [\App\Http\Controllers\ReactionController::class, "store"])->name("reaction.store");
+
+
 
     Route::get("feed/upload/file", function () {
         return Inertia::render("uploadProfilePicture");
     })->name("feed.upload.file");
+
+
     Route::get("user/{user_id}", [AccountController::class, "show"])->name("account.show");
+
+
     Route::get("comments/{post_id}", [CommentController::class, "index"]);
     Route::post("comment/store", [CommentController::class, "store"])->name("comment.store");
 
-
     Route::post("follow/store", [FollowController::class, "store"])->name("follow.store");
     Route::delete("follow/{user_id}/delete", [FollowController::class, "delete"])->name("follow.delete");
+
+
+
     Route::get("chat", [ChatController::class, "show"])->middleware(["auth"]);
     Route::get("chat/messages", [ChatController::class, "getChat"]);
-    Route::post("chat", [ChatController::class, "saveMessage"]);
+    Route::post("chat", [ChatController::class, "saveMessage"])->name("chat.save");
     Route::post("chat/{receiver_id}/{sender_id}/markseen", [ChatController::class, "markseen"]);
+    Route::get("messages/unreaded", [ChatController::class, "getUnseenMessages"]);
 });
 
 
